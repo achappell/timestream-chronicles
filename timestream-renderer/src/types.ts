@@ -1,3 +1,7 @@
+declare global {
+  const __APP_VERSION__: string; // Injected at build time
+}
+
 export interface Skill {
   id: string;
   name: string;

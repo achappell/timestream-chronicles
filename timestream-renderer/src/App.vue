@@ -5,6 +5,8 @@ import SkillCard from './components/SkillCard.vue';
 import { tick as engineTick, reanchorTimeline } from './logic/engine';
 import type { GameState } from './types';
 
+const appVersion = __APP_VERSION__; // Injected at build time
+
 const state: GameState = reactive({
   stability: 100,
   maxStability: 100,
@@ -111,6 +113,7 @@ onMounted(() => {
       </div>
     </main>
   </div>
+  <div class="version-info">Version: {{ appVersion }}</div>
 </template>
 
 <style>
@@ -166,6 +169,21 @@ button {
   animation: shake 0.5s;
   animation-iteration-count: infinite;
   background-color: rgba(255, 0, 0, 0.05); /* Subtle red tint during collapse */
+}
+
+.app-container {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 30px; /* Space for version info */
+  box-sizing: border-box;
+}
+
+.version-info {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  font-size: 0.7rem;
+  color: #444; /* Subtle grey for version info */
 }
 
 </style>

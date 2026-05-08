@@ -1,6 +1,8 @@
 import type { GameState, Skill } from "../types";
 
 const MASTERY_FACTOR = 0.1; // Mastery makes you learn 10% faster per level
+const BASE_STABILITY_DECAY = 0.5; // Base stability decay per second when a task is active
+const SCALING_FACTOR = 0.1; // Scaling factor for XP gain to prevent runaway growth
 
 export function tick(state: GameState, delta: number) {
   if (state.isPaused) return; // Don't process if the game is paused
@@ -13,7 +15,8 @@ export function tick(state: GameState, delta: number) {
   }
 
   if (state.activeTaskId && state.stability > 0) {
-    state.stability -= 0.5 * delta;
+    const scalingMultiplier = 1 + (state.timeInLoop / 60) * SCALING_FACTOR; // Increase decay over time
+    state.stability -= BASE_STABILITY_DECAY * scalingMultiplier * delta;
   }
 
   if (state.activeTaskId) {

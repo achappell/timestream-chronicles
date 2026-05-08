@@ -1,0 +1,14 @@
+{
+  "name": "timestream-chronicles-root",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Root management for Timestream Chronicles",
+  "scripts": {
+    "version:sync": "node sync-versions.js",
+    "postversion": "npm run version:sync"
+  },
+  "workspaces": [
+    "electron-shell",
+    "timestream-renderer"
+  ]
+}
