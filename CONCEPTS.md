@@ -23,6 +23,10 @@
 
 - **The "Increlution" Grid:** A high-density dashboard that avoids scrolling by using compact `SkillCard` components that display multipliers and dual-lane progress bars in a single glance.
 
+- **Adaptive Console Layout:** The TARDIS console prioritizes a "Viewport-First" display. The application aims to fit all critical telemetry (Stability, Timeline, Skills) within the primary view without scrolling. Scrolling is permitted only when content density (e.g., a long mission queue or log) exceeds the available vertical space. Metadata like the build version must be anchored to the viewport edge to remain visible regardless of content length.
+
+- **Box-Sizing Protocol:** To ensure predictable layout calculations, all elements must utilize `box-sizing: border-box`. This ensures that padding and borders are included within the element's specified width and height, preventing unexpected overflows and scrollbars in the Adaptive Console Layout.
+
 - **The Heartbeat:** A frame-rate-independent `tick` loop powered by `requestAnimationFrame` and `performance.now()`, ensuring the game runs smoothly across different hardware.
 
 ---

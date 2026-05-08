@@ -12,6 +12,12 @@
     - [ ] **Auto-Pause**: Implement "Safety Stasis" that pauses the game if no task is active.
     - [ ] Update the `Task` interface to use `entropyWeight`.
 
+- **[X] Versioning System (Option B)**:
+    - [X] Update `vite.config.ts` to inject `git rev-parse --short HEAD` into `__APP_VERSION__`.
+    - [X] Display `__APP_VERSION__` in the UI (e.g., bottom-right corner of `App.vue`).
+    - [X] **Adaptive Layout Fix**: Use `position: fixed` or `absolute` for version info and apply `box-sizing: border-box` to the main container (or globally) to ensure `min-height: 100vh` doesn't cause overflow with padding.
+    - [X] Update `deploy.yaml` to ensure the SHA is correctly captured in the GitHub Actions build environment.
+
 - **[ ] The Inventory Protocol:**
     - Add `inventory: Record<string, number>` to the state.
     - Implement a "Consume" function to use items (like "Artron Cells") to restore Stability.
