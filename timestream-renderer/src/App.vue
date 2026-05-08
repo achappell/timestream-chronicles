@@ -41,7 +41,7 @@ const state: GameState = reactive({
       description: 'Practice moving unseen through the environment to improve your stealth skills.',
       skillId: 'stealth', 
       xpPerSec: 10, 
-      artronCost: 2 
+      targetFocusLevel: 5
     },
     { 
       id: 'analyze', 
@@ -49,7 +49,7 @@ const state: GameState = reactive({
       description: 'Examine the junkyard to uncover hidden knowledge and boost your scientific inquiry skills.',
       skillId: 'scientificInquiry', 
       xpPerSec: 15, 
-      artronCost: 5 
+      targetFocusLevel: 10
     }
   ]
 });
@@ -98,7 +98,10 @@ onMounted(() => {
           v-for="task in state.tasks" 
           :key="task.id"
           @click="state.activeTaskId = task.id"
-          :class="{ active: state.activeTaskId === task.id }"
+          :class="{ 
+            active: state.activeTaskId === task.id ,
+            completed: state.skills[task.skillId].currentFocus >= task.targetFocusLevel
+          }"
         >
           {{ task.name }}
         </button>

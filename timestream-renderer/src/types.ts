@@ -30,4 +30,5 @@ export interface Task {
   skillId: string;    // Maps to the key in state.skills (e.g., 'stealth')
   xpPerSec: number;   // Base XP awarded per second
   unlocked?: boolean; // Optional: for progression logic
+  targetFocusLevel: number; // Optional: for tasks that require reaching a certain Focus level
 }
