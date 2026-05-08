@@ -6,12 +6,11 @@ import { tick as engineTick, reanchorTimeline } from './logic/engine';
 import type { GameState } from './types';
 
 const state: GameState = reactive({
-  artronEnergy: 30,
-  maxArtronEnergy: 1000,
   stability: 100,
   maxStability: 100,
   isPaused: false,
   collapseTimer: 0,
+  timeInLoop: 0,
   activeTaskId: null,
   skills: {
     scientificInquiry: { 
@@ -77,9 +76,8 @@ onMounted(() => {
    }">
     <GameHeader 
       :isPaused="state.isPaused" 
-      :energy="state.artronEnergy" 
-      :maxEnergy="state.maxArtronEnergy" 
       :stability="state.stability"
+      :timeInLoop="state.timeInLoop"
       @pause-toggle="state.isPaused = !state.isPaused"
     />
     <button

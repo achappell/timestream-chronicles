@@ -2,10 +2,9 @@
 import { computed } from 'vue';
 
 const props = defineProps<{
-  energy: number;
-  maxEnergy: number;
   stability: number;
   isPaused: boolean;
+  timeInLoop: number;
 }>();
 
 const emit = defineEmits<{
@@ -14,10 +13,8 @@ const emit = defineEmits<{
 
 const formattedTime = computed(() => {
   // Simple "Loop Timer" for the Hartnell MVP
-  // Converts energy remaining into a mock "Time" format
-  const totalSeconds = Math.floor(props.energy / 10); 
-  const mins = Math.floor(totalSeconds / 60);
-  const secs = totalSeconds % 60;
+  const mins = Math.floor(props.timeInLoop / 60);
+  const secs = Math.floor(props.timeInLoop % 60);
   return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 });
 </script>
@@ -27,13 +24,6 @@ const formattedTime = computed(() => {
     <div class="stat">
       <span class="label">TIMELINE</span>
       <span class="value">{{ formattedTime }}</span>
-    </div>
-    <div class="stat energy-stat">
-      <span class="label">ARTRON ENERGY</span>
-      <span class="value">{{ Math.floor(energy) }} / {{ maxEnergy }}</span>
-      <div class="mini-bar">
-        <div class="fill" :style="{ width: (energy / maxEnergy) * 100 + '%' }"></div>
-      </div>
     </div>
     <div class="stat">
       <span class="label">STABILITY</span>

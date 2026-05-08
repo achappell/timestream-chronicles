@@ -12,21 +12,24 @@ export function tick(state: GameState, delta: number) {
     }
   }
 
+  state.timeInLoop += delta; // Track time spent in the current loop
+
   if (state.activeTaskId && state.stability > 0) {
     state.stability -= 0.5 * delta;
   }
 
-  if (state.activeTaskId && state.artronEnergy > 0) {
+  if (state.activeTaskId) {
     const activeTask = state.tasks.find(task => task.id === state.activeTaskId);
     if (activeTask) {
       // Calculate XP gain based on task difficulty and time
       const skill = state.skills[activeTask.skillId];
       if (skill) {
-        state.artronEnergy -= activeTask.artronCost * delta; // Consume Artron Energy
         updateSkill(skill, activeTask.xpPerSec, delta); // Update the skill with XP gain
       }
     }
   } 
+
+  state.timeInLoop += delta; // Track time spent in the current loop
 
   if (state.stability <= 0) {
     state.stability = 0; // Prevent negative stability
@@ -59,7 +62,6 @@ export function updateSkill(skill: Skill, taskXP: number, delta: number) {
 
 export function reanchorTimeline(state: GameState) {
   state.stability = state.maxStability;
-  state.artronEnergy = state.maxArtronEnergy;
   state.activeTaskId = null;
   state.isPaused = false;
   state.collapseTimer = 0;
@@ -69,5 +71,6 @@ export function reanchorTimeline(state: GameState) {
     const skill = state.skills[skillKey];
     skill.currentFocus = 0; // Reset Focus level
     skill.focusXP = 0; // Reset Focus XP
+    state.timeInLoop = 0; // Reset loop timer
   }
 }

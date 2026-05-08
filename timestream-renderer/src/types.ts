@@ -9,12 +9,11 @@ export interface Skill {
 }
 
 export interface GameState {
-  artronEnergy: number;
-  maxArtronEnergy: number;
   stability: number; 
   maxStability: number; 
   isPaused: boolean;
   collapseTimer: number; // Timer to manage collapse duration
+  timeInLoop: number; // Total time spent in the current loop
   activeTaskId: string | null;
   skills: Record<string, Skill>;
   tasks: Task[];
@@ -26,6 +25,5 @@ export interface Task {
   description: string;
   skillId: string;    // Maps to the key in state.skills (e.g., 'stealth')
   xpPerSec: number;   // Base XP awarded per second
-  artronCost: number; // Energy drained per second
   unlocked?: boolean; // Optional: for progression logic
 }
