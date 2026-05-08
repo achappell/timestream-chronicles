@@ -1,6 +1,42 @@
-import type { Skill } from "../types";
+import type { GameState, Skill } from "../types";
 
 const MASTERY_FACTOR = 0.1; // Mastery makes you learn 10% faster per level
+
+export function tick(state: GameState, delta: number) {
+  if (state.isPaused) return; // Don't process if the game is paused
+
+  if (state.collapseTimer > 0) {
+    state.collapseTimer -= delta;
+    if (state.collapseTimer <= 0) {
+      state.collapseTimer = 0;
+    }
+  }
+
+  if (state.activeTaskId && state.stability > 0) {
+    state.stability -= 0.5 * delta;
+  }
+
+  if (state.activeTaskId && state.artronEnergy > 0) {
+    const activeTask = state.tasks.find(task => task.id === state.activeTaskId);
+    if (activeTask) {
+      // Calculate XP gain based on task difficulty and time
+      const skill = state.skills[activeTask.skillId];
+      if (skill) {
+        state.artronEnergy -= activeTask.artronCost * delta; // Consume Artron Energy
+        updateSkill(skill, activeTask.xpPerSec, delta); // Update the skill with XP gain
+      }
+    }
+  } 
+
+  if (state.stability <= 0) {
+    state.stability = 0; // Prevent negative stability
+    state.activeTaskId = null; // Stop the active task
+
+    if (state.collapseTimer <= 0) {
+      state.collapseTimer = 1.5; // Start collapse timer
+    }
+  }
+}
 
 export function updateSkill(skill: Skill, taskXP: number, delta: number) {
   // 1. Calculate how fast we learn based on Mastery
@@ -19,4 +55,19 @@ export function updateSkill(skill: Skill, taskXP: number, delta: number) {
   
   // 4. Always add a tiny bit to Permanent Mastery
   skill.masteryXP += taskXP * 0.01 * delta;
+}
+
+export function reanchorTimeline(state: GameState) {
+  state.stability = state.maxStability;
+  state.artronEnergy = state.maxArtronEnergy;
+  state.activeTaskId = null;
+  state.isPaused = false;
+  state.collapseTimer = 0;
+
+  // Reset all skills' Focus and add Mastery XP
+  for (const skillKey in state.skills) {
+    const skill = state.skills[skillKey];
+    skill.currentFocus = 0; // Reset Focus level
+    skill.focusXP = 0; // Reset Focus XP
+  }
 }

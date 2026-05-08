@@ -2,22 +2,31 @@
 import { reactive, onMounted } from 'vue';
 import GameHeader from './components/GameHeader.vue';
 import SkillCard from './components/SkillCard.vue';
+import { tick as engineTick, reanchorTimeline } from './logic/engine';
+import type { GameState } from './types';
 
-// 1. STATE INITIALIZATION
-const state = reactive({
-  artronEnergy: 1000,
+const state: GameState = reactive({
+  artronEnergy: 30,
   maxArtronEnergy: 1000,
-  activeTaskId: null as string | null,
+  stability: 100,
+  maxStability: 100,
+  isPaused: false,
+  collapseTimer: 0,
+  activeTaskId: null,
   skills: {
     scientificInquiry: { 
+      id: 'scientificInquiry',
       name: 'Scientific Inquiry', 
+      description: 'The ability to analyze and understand the world around you, uncovering hidden knowledge and insights.',
       permanentMastery: 5, 
       currentFocus: 0, 
       focusXP: 0,
       masteryXP: 0 
     },
     stealth: { 
+      id: 'stealth',
       name: 'Stealth', 
+      description: 'The skill of moving unseen and unheard, allowing you to navigate dangerous environments without detection.',
       permanentMastery: 0, 
       currentFocus: 0, 
       focusXP: 0,
@@ -25,44 +34,37 @@ const state = reactive({
     }
   },
   tasks: [
-    { id: 'lurk', name: 'Lurk in Shadows', skillId: 'stealth', xpPerSec: 10, artronCost: 2 },
-    { id: 'analyze', name: 'Analyze Junkyard', skillId: 'scientificInquiry', xpPerSec: 15, artronCost: 5 }
+    { 
+      id: 'lurk', 
+      name: 'Lurk in Shadows', 
+      description: 'Practice moving unseen through the environment to improve your stealth skills.',
+      skillId: 'stealth', 
+      xpPerSec: 10, 
+      artronCost: 2 
+    },
+    { 
+      id: 'analyze', 
+      name: 'Analyze Junkyard', 
+      description: 'Examine the junkyard to uncover hidden knowledge and boost your scientific inquiry skills.',
+      skillId: 'scientificInquiry', 
+      xpPerSec: 15, 
+      artronCost: 5 
+    }
   ]
 });
 
-// 2. THE TICK ENGINE
 let lastTick = performance.now();
 const tick = () => {
   const now = performance.now();
   const delta = (now - lastTick) / 1000;
   lastTick = now;
 
-  if (state.activeTaskId && state.artronEnergy > 0) {
-    const task = state.tasks.find(t => t.id === state.activeTaskId);
-    const skill = (state.skills as any)[task!.skillId];
-
-    if (task && skill) {
-      // Drain Energy
-      state.artronEnergy -= task.artronCost * delta;
-      
-      // Focus XP (Mastery Multiplier)
-      const multiplier = 1 + (skill.permanentMastery * 0.1);
-      skill.focusXP += task.xpPerSec * multiplier * delta;
-      
-      // Level Up Logic
-      if (skill.focusXP >= 100) {
-        skill.focusXP -= 100;
-        skill.currentFocus++;
-      }
-    }
-  }
-
-  if (state.artronEnergy <= 0) {
-    state.artronEnergy = 0;
-    state.activeTaskId = null;
-  }
-
+  engineTick(state, delta);
   requestAnimationFrame(tick);
+};
+
+const handleReanchor = () => {
+  reanchorTimeline(state);
 };
 
 onMounted(() => {
@@ -71,9 +73,23 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="app-container">
-    <GameHeader :energy="state.artronEnergy" :maxEnergy="state.maxArtronEnergy" />
-    
+  <div class="app-container" :class="{ shake: state.collapseTimer > 0
+   }">
+    <GameHeader 
+      :isPaused="state.isPaused" 
+      :energy="state.artronEnergy" 
+      :maxEnergy="state.maxArtronEnergy" 
+      :stability="state.stability"
+      @pause-toggle="state.isPaused = !state.isPaused"
+    />
+    <button
+      v-if="state.stability <= 0"
+      @click="handleReanchor"
+      class="reanchor-btn"
+    >
+      RE-ANCHOR TIMELINE
+    </button>
+
     <main class="console-grid">
       <div class="section-label">MISSION PROTOCOLS</div>
       <div class="task-list">
@@ -133,4 +149,25 @@ button {
   color: #ccc; /* Brighter default text */
   /* ... existing styles ... */
 }
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg);}
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, 1px) rotate(1deg); }
+  90% { transform: translate(1px, 1px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.shake {
+  animation: shake 0.5s;
+  animation-iteration-count: infinite;
+  background-color: rgba(255, 0, 0, 0.05); /* Subtle red tint during collapse */
+}
+
 </style>

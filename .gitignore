@@ -1,0 +1,29 @@
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Environment / Secrets
+.env
+*.local
+.env.*
+
+# Dependency Directories
+node_modules/
+jspm_packages/
+
+# Build Artifacts (Electron & Vite)
+dist/
+dist-ssr/
+out/
+release/
+
+# Project Specific
+.obsidian/
+.vscode/*
+!.vscode/extensions.json
+
+# Logs
+*.log
+npm-debug.log*
+.gemini
+/.DS_Store

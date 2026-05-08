@@ -11,7 +11,13 @@ export interface Skill {
 export interface GameState {
   artronEnergy: number;
   maxArtronEnergy: number;
+  stability: number; 
+  maxStability: number; 
+  isPaused: boolean;
+  collapseTimer: number; // Timer to manage collapse duration
+  activeTaskId: string | null;
   skills: Record<string, Skill>;
+  tasks: Task[];
 }
 
 export interface Task {

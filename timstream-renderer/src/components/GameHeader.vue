@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-// 1. Define the props so the template can see 'energy' and 'maxEnergy'
 const props = defineProps<{
   energy: number;
   maxEnergy: number;
+  stability: number;
+  isPaused: boolean;
 }>();
 
-// 2. Create the formattedTime logic
+const emit = defineEmits<{
+  (e: 'pause-toggle'): void;
+}>();
+
 const formattedTime = computed(() => {
   // Simple "Loop Timer" for the Hartnell MVP
   // Converts energy remaining into a mock "Time" format
@@ -33,12 +37,40 @@ const formattedTime = computed(() => {
     </div>
     <div class="stat">
       <span class="label">STABILITY</span>
-      <span class="value">98.2%</span>
+      <span class="value">{{ stability.toFixed(1) }}%</span>
     </div>
+    <button 
+      :class="{ active: isPaused }" 
+      class="stasis-btn" 
+      @click="emit('pause-toggle')"
+      >
+      {{ isPaused ? 'RESUME FLOW' : 'STASIS' }}
+    </button>
   </header>
 </template>
 
 <style scoped>
+
+.stasis-btn {
+  background: transparent;
+  color: #555;
+  border: 1px solid #555;
+  padding: 5px 0;
+  width: 120px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  font-family: inherit
+}
+
+.stasis-btn.active {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+  box-shadow: 0 0 20px #fff;
+}
+
 .tardis-header {
   display: flex;
   justify-content: space-around;
