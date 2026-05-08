@@ -8,8 +8,8 @@
     - [X] Remove **Artron Energy** from state, types, and UI.
     - [X] **Scaling Decay**: Increase `baseDecay` based on `timeInLoop` (Formula: $Decay = Base \times (1 + (Time / 60) \times 0.1)$).
     - [X] **Engine Cleanup**: Remove duplicate `timeInLoop` increment in `engine.ts` and fix reset loop.
-    - [ ] **Entropy Display**: Add current decay rate readout to `GameHeader`.
-    - [ ] **Auto-Pause**: Implement "Safety Stasis" that pauses the game if no task is active.
+    - [X] **Entropy Display**: Add current decay rate readout to `GameHeader` with `/s` time signifier.
+    - [ ] **Auto-Pause**: Implement "Safety Stasis" in `engine.ts` that pauses the game if no task is active.
     - [ ] Update the `Task` interface to use `entropyWeight`.
 
 - **[X] Versioning System (Option B)**:
@@ -54,6 +54,11 @@
     
 
 ### 🧪 Mission Protocols: Task & Queue Logic
+
+- **[ ] Task Completion**:
+    - [ ] Update `Task` interface in `types.ts` to include `targetFocus: number`.
+    - [ ] Update `tick` logic in `engine.ts` to clear `activeTaskId` when `targetFocus` is met.
+    - [ ] Add CSS for `.completed` state in `App.vue` to show progress completion.
 
 - **[ ] Task Queue Array:** Add `taskQueue: string[]` to the state.
     
