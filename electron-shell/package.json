@@ -1,0 +1,12 @@
+{
+  "name": "timestream-shell",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "electron": "^42.0.0"
+  }
+}
