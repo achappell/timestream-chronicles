@@ -45,6 +45,7 @@
 
 ## 📜 ARCHIVAL PROTOCOL (Documentation Maintenance)
 * **Automatic Synchronization**: Every significant architectural change, logic refactor, or narrative addition MUST be reflected in the project's documentation immediately.
+* **Notion Synchronization**: The project's `TODO.md` must be mirrored in the **"Timestream Chronicles"** Notion database (`35a4fc50-af3f-80bd-a16e-d267fbc731ca`). Every update to the local roadmap MUST be propagated to Notion to maintain a synchronized mission board.
 * **Commit Amendment**: To maintain a clean and focused timeline, sequential documentation-only updates should be amended to the previous documentation commit using `git commit --amend --no-edit` (or with a refined message) rather than creating new "chatter" commits.
 * **Target Files**:
     * **`README.md`**: High-level overview and technical stack.
