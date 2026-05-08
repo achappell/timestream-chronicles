@@ -18,6 +18,11 @@
     - [X] **Adaptive Layout Fix**: Use `position: fixed` or `absolute` for version info and apply `box-sizing: border-box` to the main container (or globally) to ensure `min-height: 100vh` doesn't cause overflow with padding.
     - [X] Update `deploy.yaml` to ensure the SHA is correctly captured in the GitHub Actions build environment.
 
+- **[ ] Shared UI Protocol**:
+    - [ ] Create `ProgressBar.vue` shared component to centralize "Glow" and "Scanline" bar styles.
+    - [ ] Refactor `SkillCard.vue` and `SkillBar.vue` to use the shared `ProgressBar`.
+    - [ ] Update `App.vue` mission cycles to use the shared `ProgressBar`.
+
 - **[ ] The Inventory Protocol:**
     - Add `inventory: Record<string, number>` to the state.
     - Implement a "Consume" function to use items (like "Artron Cells") to restore Stability.
