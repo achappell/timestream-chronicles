@@ -9,7 +9,7 @@
     - [X] **Scaling Decay**: Increase `baseDecay` based on `timeInLoop` (Formula: $Decay = Base \times (1 + (Time / 60) \times 0.1)$).
     - [X] **Engine Cleanup**: Remove duplicate `timeInLoop` increment in `engine.ts` and fix reset loop.
     - [X] **Entropy Display**: Add current decay rate readout to `GameHeader` with `/s` time signifier.
-    - [ ] **Auto-Pause**: Implement "Safety Stasis" in `engine.ts` that pauses the game if no task is active.
+    - [X] **Auto-Pause**: Implement "Safety Stasis" in `engine.ts` that pauses the game if no task is active.
     - [ ] Update the `Task` interface to use `entropyWeight`.
 
 - **[X] Versioning System (Option B)**:
