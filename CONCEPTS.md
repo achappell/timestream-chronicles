@@ -12,7 +12,11 @@
 
 - **Safety Stasis (Auto-Pause):** To prevent the unnecessary erosion of Timeline Stability, the TARDIS will automatically engage a "Stasis" state (Pause) whenever no mission protocol (Task) is currently active. The player must manually resume flow or select a new task to continue.
 
-- **Task Completion:** Every mission protocol has a defined "Target Focus." When the associated skill's Focus Level reaches this target, the task is marked as complete and automatically deactivated. This triggers the **Sequence Buffer** to pull the next task or engages **Safety Stasis** if the queue is empty.
+- **Mission Cycles:** Tasks are no longer simple toggles; they consist of "Cycles" (units of work). Each cycle requires a specific amount of progress to complete. Skill XP is awarded only upon the completion of a full cycle, rather than continuously.
+    - **Progress Bar:** Each task has an internal progress bar (`currentProgress` / `targetProgress`).
+    - **Completion Counter:** Tasks track how many cycles have been finished in the current loop (`completions`).
+
+- **Task Completion:** A mission protocol is considered "Finalized" when its `completions` count reaches the `maxCompletions` limit. Once finalized, the task is automatically deactivated, triggering the **Sequence Buffer** or engaging **Safety Stasis**.
 
 - **The Dual-Progress Paradigm:**
     - **Mastery (The Foundation):** Permanent, slow-growing levels that provide multiplicative bonuses to XP gains and survival efficiency.

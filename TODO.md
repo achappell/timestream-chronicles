@@ -55,10 +55,11 @@
 
 ### 🧪 Mission Protocols: Task & Queue Logic
 
-- **[ ] Task Completion**:
-    - [ ] Update `Task` interface in `types.ts` to include `targetFocus: number`.
-    - [ ] Update `tick` logic in `engine.ts` to clear `activeTaskId` when `targetFocus` is met.
-    - [ ] Add CSS for `.completed` state in `App.vue` to show progress completion.
+- **[ ] Mission Cycles (Incremental Task Progress)**:
+    - [ ] Update `Task` interface in `types.ts` with `currentProgress`, `targetProgress`, `completions`, and `maxCompletions`.
+    - [ ] Update `tick` logic in `engine.ts` to advance task progress and increment completion count.
+    - [ ] Modify `engine.ts` to award Skill XP ONLY upon cycle completion.
+    - [ ] Add task progress bars and completion counters (`5/10`) to the UI in `App.vue`.
 
 - **[ ] Task Queue Array:** Add `taskQueue: string[]` to the state.
     
