@@ -5,6 +5,7 @@ const props = defineProps<{
   stability: number;
   isPaused: boolean;
   timeInLoop: number;
+  entropyRate: number;
 }>();
 
 const emit = defineEmits<{
@@ -28,6 +29,10 @@ const formattedTime = computed(() => {
     <div class="stat">
       <span class="label">STABILITY</span>
       <span class="value">{{ stability.toFixed(1) }}%</span>
+    </div>
+    <div class="stat">
+      <span class="label">ENTROPY RATE</span>
+      <span class="value">{{ entropyRate.toFixed(2) }}%/s</span>
     </div>
     <button 
       :class="{ active: isPaused }" 

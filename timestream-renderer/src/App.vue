@@ -2,7 +2,7 @@
 import { reactive, onMounted } from 'vue';
 import GameHeader from './components/GameHeader.vue';
 import SkillCard from './components/SkillCard.vue';
-import { tick as engineTick, reanchorTimeline } from './logic/engine';
+import { calculateEntropyRate, tick as engineTick, reanchorTimeline } from './logic/engine';
 import type { GameState } from './types';
 
 const appVersion = __APP_VERSION__; // Injected at build time
@@ -80,6 +80,7 @@ onMounted(() => {
       :isPaused="state.isPaused" 
       :stability="state.stability"
       :timeInLoop="state.timeInLoop"
+      :entropyRate="calculateEntropyRate(state)"
       @pause-toggle="state.isPaused = !state.isPaused"
     />
     <button

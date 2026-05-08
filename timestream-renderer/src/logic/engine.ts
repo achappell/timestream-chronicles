@@ -5,6 +5,10 @@ const BASE_STABILITY_DECAY = 0.5; // Base stability decay per second when a task
 const SCALING_FACTOR = 0.1; // Scaling factor for XP gain to prevent runaway growth
 
 export function tick(state: GameState, delta: number) {
+  if (!state.activeTaskId && !state.isPaused) {
+    state.isPaused = true; // Auto-pause if no active task
+  }
+
   if (state.isPaused) return; // Don't process if the game is paused
 
   if (state.collapseTimer > 0) {
@@ -15,8 +19,7 @@ export function tick(state: GameState, delta: number) {
   }
 
   if (state.activeTaskId && state.stability > 0) {
-    const scalingMultiplier = 1 + (state.timeInLoop / 60) * SCALING_FACTOR; // Increase decay over time
-    state.stability -= BASE_STABILITY_DECAY * scalingMultiplier * delta;
+    state.stability -= calculateEntropyRate(state) * delta; // Decay stability based on active task and time in loop
   }
 
   if (state.activeTaskId) {
@@ -74,4 +77,10 @@ export function reanchorTimeline(state: GameState) {
     skill.currentFocus = 0; // Reset Focus level
     skill.focusXP = 0; // Reset Focus XP
   }
+}
+
+export function calculateEntropyRate(state: GameState): number {
+  if (!state.activeTaskId) return 0; // No active task, no entropy gain
+  const scalingMultiplier = 1 + (state.timeInLoop / 60) * SCALING_FACTOR; // Increase decay over time
+  return BASE_STABILITY_DECAY * scalingMultiplier; // Base decay scaled by time in loop
 }
