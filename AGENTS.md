@@ -36,6 +36,15 @@
 3.  **No State Drift**: Do not suggest external state libraries (like Pinia) until the Persistence Layer is stabilized.
 4.  **No Spoilers**: Limit game flavor and mechanics to the Hartnell Era (1963) unless explicitly requested.
 
+## 📜 ARCHIVAL PROTOCOL (Documentation Maintenance)
+* **Automatic Synchronization**: Every significant architectural change, logic refactor, or narrative addition MUST be reflected in the project's documentation immediately.
+* **Target Files**:
+    * **`README.md`**: High-level overview and technical stack.
+    * **`TODO.md`**: Task tracking and roadmap.
+    * **`CONCEPTS.md`**: Core mechanics and logic definitions.
+    * **`narrative-flow.md`**: Story progression and era milestones.
+* **Consistency**: Ensure terminology remains consistent across all files (e.g., "Stability," "Entropy," "Re-Anchoring").
+
 ## 📡 TECHNICAL DEBT & PRIORITIES
 1.  **Persistence**: Implementation of `localStorage` serialization.
 2.  **Queueing**: Logic for the Sequence Buffer (Action Queue).
