@@ -12,8 +12,6 @@ export function tick(state: GameState, delta: number) {
     }
   }
 
-  state.timeInLoop += delta; // Track time spent in the current loop
-
   if (state.activeTaskId && state.stability > 0) {
     state.stability -= 0.5 * delta;
   }
@@ -65,12 +63,12 @@ export function reanchorTimeline(state: GameState) {
   state.activeTaskId = null;
   state.isPaused = false;
   state.collapseTimer = 0;
+  state.timeInLoop = 0; // Reset loop timer
 
   // Reset all skills' Focus and add Mastery XP
   for (const skillKey in state.skills) {
     const skill = state.skills[skillKey];
     skill.currentFocus = 0; // Reset Focus level
     skill.focusXP = 0; // Reset Focus XP
-    state.timeInLoop = 0; // Reset loop timer
   }
 }
