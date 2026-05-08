@@ -4,10 +4,11 @@
 
 - **[X] The Stasis Toggle (Pause):** Toggle pause state to halt the global `tick` loop.
 
-- **[ ] The Entropy Refactor:** 
-    - Remove **Artron Energy** from state, types, and UI.
-    - Implement **Scaling Decay**: Increase `baseDecay` based on `timeInLoop`.
-    - Update the `Task` interface to use `entropyWeight`.
+- [X] The Entropy Refactor: 
+    - [X] Remove **Artron Energy** from state, types, and UI.
+    - [ ] **Scaling Decay**: Increase `baseDecay` based on `timeInLoop` (Formula: $Decay = Base \times (1 + (Time / 60) \times 0.1)$).
+    - [ ] **Engine Cleanup**: Remove duplicate `timeInLoop` increment in `engine.ts` and fix reset loop.
+    - [ ] Update the `Task` interface to use `entropyWeight`.
 
 - **[ ] The Inventory Protocol:**
     - Add `inventory: Record<string, number>` to the state.
