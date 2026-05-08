@@ -6,8 +6,10 @@
 
 - [X] The Entropy Refactor: 
     - [X] Remove **Artron Energy** from state, types, and UI.
-    - [ ] **Scaling Decay**: Increase `baseDecay` based on `timeInLoop` (Formula: $Decay = Base \times (1 + (Time / 60) \times 0.1)$).
-    - [ ] **Engine Cleanup**: Remove duplicate `timeInLoop` increment in `engine.ts` and fix reset loop.
+    - [X] **Scaling Decay**: Increase `baseDecay` based on `timeInLoop` (Formula: $Decay = Base \times (1 + (Time / 60) \times 0.1)$).
+    - [X] **Engine Cleanup**: Remove duplicate `timeInLoop` increment in `engine.ts` and fix reset loop.
+    - [ ] **Entropy Display**: Add current decay rate readout to `GameHeader`.
+    - [ ] **Auto-Pause**: Implement "Safety Stasis" that pauses the game if no task is active.
     - [ ] Update the `Task` interface to use `entropyWeight`.
 
 - **[ ] The Inventory Protocol:**
@@ -47,13 +49,15 @@
 
 ### 🧪 Mission Protocols: Task & Queue Logic
 
-- **[ ] Task Queue Array:** Add `queue: string[]` to the state.
+- **[ ] Task Queue Array:** Add `taskQueue: string[]` to the state.
     
-- **[ ] The "Next Task" Handshake:** Update the `tick` function so that when a focus level is gained (or energy runs out), the engine automatically pulls the next `taskId` from the array.
+- **[ ] The "Next Task" Handshake:** Update the `tick` function to automatically pull from the queue if `activeTaskId` is null.
+    
+- **[ ] Shift-Click Queueing:** Update UI to allow adding to queue via `Shift + Click`.
     
 - **[ ] Unlock Logic:** Add an `unlocked` boolean to the Task interface. Set "Analyze Junkyard" to `false` until "Lurk in Shadows" reaches Level 5.
     
-- **[ ] Action Tooltips:** Add a "hover" state to task buttons that displays the XP gain and Artron cost in a mono-spaced "Technical Readout" box.
+- **[ ] Action Tooltips:** Add a "hover" state to task buttons that displays the XP gain and Entropy weight in a mono-spaced "Technical Readout" box.
     
 
 ### 📜 Narrative & Logging
