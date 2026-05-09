@@ -48,6 +48,12 @@
 
 - **Automation:** Implementation of the **Sequence Buffer** (Task Queue) and **Safety Stasis** (Auto-Pause) to refine the player experience.
 
+- **Validation Gates (Testing):** The project utilizes a "High-Value" testing strategy. Tests are reserved for core mechanical integrity rather than UI coverage. Critical validation points include:
+    - **Entropy Curve Integrity**: Ensuring stability decay scales exactly as defined.
+    - **Stasis Triggers**: Verifying auto-pause logic engages on idle.
+    - **Cycle Accuracy**: Confirming XP is awarded only upon full mission completion.
+    - **Multiplier Precision**: Validating that Mastery bonuses apply correctly to focus gains.
+
 ---
 
 ### 📓 The "Undocumented" Ideas

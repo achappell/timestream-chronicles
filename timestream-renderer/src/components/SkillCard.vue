@@ -64,7 +64,7 @@ const masteryProgress = computed(() => Math.min(props.skill.permanentMastery * 5
 
 .skill-name { 
   color: var(--color-text-bright); 
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 800;
   text-transform: uppercase;
 }
@@ -72,8 +72,8 @@ const masteryProgress = computed(() => Math.min(props.skill.permanentMastery * 5
 .multiplier { 
   background: var(--color-focus-white); 
   color: var(--color-vortex-black);
-  padding: 1px 5px;
-  font-size: 0.7rem;
+  padding: 2px 6px;
+  font-size: 0.75rem;
   font-weight: bold;
 }
 

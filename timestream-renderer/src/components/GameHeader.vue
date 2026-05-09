@@ -80,10 +80,10 @@ const formattedTime = computed(() => {
 
 /* Inside GameHeader.vue <style> */
 .label { 
-  font-size: 0.65rem; 
+  font-size: 0.75rem; 
   color: var(--color-text-mid); /* Much more readable */
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
 }
 .value { 
   font-size: 1.2rem; 

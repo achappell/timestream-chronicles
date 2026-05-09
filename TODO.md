@@ -23,6 +23,11 @@
     - [X] Refactor `SkillCard.vue` and `SkillBar.vue` to use the shared `ProgressBar`.
     - [X] Update `App.vue` mission cycles to use the shared `ProgressBar`.
 
+- **[ ] High-Value Testing Protocol**:
+    - [ ] Install **Vitest** for engine unit testing.
+    - [X] Create `engine.test.ts` to validate Entropy Scaling, Safety Stasis, and XP Multipliers.
+    - [ ] Integrate test run into GitHub Actions build pipeline.
+
 - **[ ] The Inventory Protocol:**
     - Add `inventory: Record<string, number>` to the state.
     - Implement a "Consume" function to use items (like "Artron Cells") to restore Stability.
@@ -55,6 +60,12 @@
     - [X] **Regeneration Architecture**: Wrap Variables in `[data-era="hartnell"]` for future-proofing.
     - [X] Link `theme.css` in `main.ts`.
 
+- **[X] Legibility Protocol (Accessibility Audit)**:
+    - [X] Brighten text tokens for WCAG contrast compliance.
+    - [X] Standardize minimum readout font-size to `0.75rem`.
+    - [X] Increase button hit areas to `min-height: 48px`.
+    - [X] Fix invisible count labels in `ProgressBar.vue`.
+
 - **[ ] CRT Overlay:** Add a persistent `::after` pseudo-element on the main container with a linear-gradient for scanlines and a 2% opacity "flicker" animation.
     
 - **[ ] Aspect Ratio Lock:** Update `main.js` to use `mainWindow.setAspectRatio(4/3)` to force that classic TV box shape.
@@ -66,11 +77,11 @@
 
 ### 🧪 Mission Protocols: Task & Queue Logic
 
-- **[ ] Mission Cycles (Incremental Task Progress)**:
-    - [ ] Update `Task` interface in `types.ts` with `currentProgress`, `targetProgress`, `completions`, and `maxCompletions`.
-    - [ ] Update `tick` logic in `engine.ts` to advance task progress and increment completion count.
-    - [ ] Modify `engine.ts` to award Skill XP ONLY upon cycle completion.
-    - [ ] Add task progress bars and completion counters (`5/10`) to the UI in `App.vue`.
+- **[X] Mission Cycles (Incremental Task Progress)**:
+    - [X] Update `Task` interface in `types.ts` with `currentProgress`, `targetProgress`, `completions`, and `maxCompletions`.
+    - [X] Update `tick` logic in `engine.ts` to advance task progress and increment completion count.
+    - [X] Modify `engine.ts` to award Skill XP ONLY upon cycle completion.
+    - [X] Add task progress bars and completion counters (`5/10`) to the UI in `App.vue`.
 
 - **[ ] Task Queue Array:** Add `taskQueue: string[]` to the state.
     

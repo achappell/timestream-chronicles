@@ -50,8 +50,8 @@ const props = defineProps<{
   position: absolute;
   left: 6px;
   top: 0px;
-  font-size: 0.6rem;
-  font-weight: 900;
+  font-size: 0.75rem;
+  font-weight: 800;
   z-index: 10;
   color: var(--color-focus-white);
   text-shadow: 1px 1px 2px #000;
@@ -63,10 +63,10 @@ const props = defineProps<{
   position: absolute;
   right: 6px;
   top: 0px;
-  font-size: 0.6rem;
-  font-weight: 900;
+  font-size: 0.75rem;
+  font-weight: 800;
   z-index: 10;
-  color: var(--color-panel-mid);
+  color: var(--color-text-bright);
   text-shadow: 1px 1px 2px #000;
   pointer-events: none;
   line-height: 16px;

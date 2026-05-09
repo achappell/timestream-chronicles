@@ -179,7 +179,8 @@ button {
   display: flex;
   flex-direction: column;
   min-width: 160px;
-  padding: 10px;
+  min-height: 48px;
+  padding: 12px;
   transition: var(--transition-smooth);
 }
 
@@ -214,8 +215,8 @@ button {
   position: absolute;
   bottom: 10px;
   right: 15px;
-  font-size: 0.7rem;
-  color: #444; /* Subtle grey for version info */
+  font-size: 0.75rem;
+  color: var(--color-text-dim); 
 }
 
 </style>
