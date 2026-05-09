@@ -97,12 +97,9 @@ const isMenuOpen = ref(false);
 const handleManualSave = () => saveGame(state);
 const handleHardReset = () => clearSave();
 const handleImport = (str: string) => {
-  const newState = importSave(str);
+  const newState = importSave(str, DEFAULT_STATE);
   if (newState) {
-    state.stability = newState.stability;
-    state.skills = newState.skills;
-    state.tasks = newState.tasks;
-    state.timeInLoop = newState.timeInLoop;
+    Object.assign(state, newState); // Update reactive state with imported data
     
     saveGame(state); // Immediately save the imported state
     alert('TIMELINE IMPORTED SUCCESSFULLY!');

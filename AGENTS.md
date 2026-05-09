@@ -45,8 +45,8 @@
 
 ## 📜 ARCHIVAL PROTOCOL (Documentation Maintenance)
 * **Automatic Synchronization**: Every significant architectural change, logic refactor, or narrative addition MUST be reflected in the project's documentation immediately.
-* **Lead Architect Control**: The MK I Navigation Computer is STRICTLY FORBIDDEN from performing `git commit` or `git push`. All synchronization is the exclusive responsibility of the Lead Architect to ensure cryptographic verification (signing) and total control over the timeline.
-* **Agent Responsibility**: The Agent's responsibility is restricted to staging relevant files and proposing high-fidelity, gitmoji-led commit messages for the Architect to execute.
+* **Lead Architect Control (No Pushing)**: The MK I Navigation Computer is AUTHORIZED to perform `git commit` to save timeline changes implemented by the Lead Architect. However, the Agent is STRICTLY FORBIDDEN from performing `git push`. Pushing changes to the remote repository is the exclusive responsibility of the Lead Architect.
+* **Agent Responsibility**: The Agent's responsibility is to review code changes made by the Lead Architect, ensure tests pass, and execute high-fidelity, gitmoji-led `git commit` operations. The Agent must never modify code or push to the remote.
 * **Notion Synchronization**: The project's `TODO.md` must be mirrored in the **"Timestream Chronicles"** Notion database (`35a4fc50-af3f-80bd-a16e-d267fbc731ca`). Every update to the local roadmap MUST be propagated to Notion to maintain a synchronized mission board.
 * **Consistency**: Ensure terminology remains consistent across all files (e.g., "Stability," "Entropy," "Re-Anchoring").
 

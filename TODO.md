@@ -41,6 +41,8 @@
 
 - **[X] Temporal Re-Anchoring:** Reset loop logic (Stability restore, Focus wipe, Mastery preserve).
 
+- **[X] Temporal Re-Anchoring:** Reset loop logic (Stability restore, Focus wipe, Mastery preserve).
+
 - **[X] Type Safety Audit:** Align `reactive` state with `GameState` interface.
 
 ### 💾 Data Persistence: The "Tardis Memory"
@@ -104,3 +106,14 @@
 - **[ ] The Transmission Log:** Create a small, scrolling text area at the bottom of the screen for flavor text (e.g., _"Sensors detect a police box in the fog..."_).
     
 - **[ ] Era-Appropriate Labels:** Audit all UI text to ensure it sounds like 1963 (e.g., Change "Settings" to "System Calibration," "XP" to "Cognitive Imprint").
+
+### 🛠️ Codebase Review Findings (May 2026)
+
+- **[ ] [BUG] Missing Mastery Progression:** `permanentMastery` attribute is never updated in `src/logic/engine.ts`. Needs integration into prestige (`reanchorTimeline`) mechanics.
+- **[ ] [BUG] UI Sync Bug in SkillCard:** `SkillCard.vue` calculates `focusProgress` using `% 100`, but engine uses `(level + 1) * 100`. The UI progress bar falls out of sync with actual progression.
+- **[X] [BUG] Fragile Imports in Persistence:** `importSave` function and its usage in `App.vue` lack the robust merge strategy found in `loadGame`. Importing outdated schemas can cause crashes.
+- **[ ] [Architecture] State Management Refactor:** `App.vue` acts as a "God Component". Transition state management to Pinia for better scalability and separation of concerns.
+- **[ ] [Architecture] Remove Redundant Code:** `SkillBar.vue` appears to be unused and should be removed.
+- **[ ] [Architecture] Electron Shell Production Readiness:** Electron `main.js` is hardcoded to `http://localhost:5173`. Needs logic to load built assets for production.
+- **[ ] [Architecture] Electron IPC Bridge:** Missing Inter-Process Communication (IPC) bridge in Electron for OS interactions (e.g., file saves).
+- **[ ] [Testing] Component Testing:** Implement component-level testing for the Vue UI (currently only core logic is tested).

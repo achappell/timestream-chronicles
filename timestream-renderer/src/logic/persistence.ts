@@ -43,15 +43,30 @@ export function loadGame(defaultState: GameState): GameState {
   }
 }
 
+export function hydrateState(defaultState: GameState, parsed: any): GameState {
+  return {
+    ...defaultState,
+    ...parsed,
+    // Ensure skills map is merged correctly
+    skills: { ...defaultState.skills, ...parsed.skills },
+    // Ensure task progress is merged by ID
+    tasks: defaultState.tasks.map(dt => {
+      const savedTask = parsed.tasks?.find((st: any) => st.id === dt.id);
+      return savedTask ? { ...dt, ...savedTask } : dt;
+    })
+  };
+}
+
 export function exportSave(state: GameState): string {
   const serialized = JSON.stringify(state);
   return btoa(serialized);
 }
 
-export function importSave(encoded: string): GameState | null {
+export function importSave(encoded: string, defaultState: GameState): GameState | null {
   try {
     const decoded = atob(encoded);
-    return JSON.parse(decoded);
+    const parsed = JSON.parse(decoded);
+    return hydrateState(defaultState, parsed);
   } catch (e) {
     console.error("TARDIS Memory Error: Failed to decode imported save.", e);
     return null;
