@@ -144,10 +144,71 @@ onMounted(() => {
   background: var(--color-vortex-black); 
   color: var(--color-text-bright); 
   position: relative;
-  padding-bottom: 30px; /* Space for version info */
+  padding-bottom: 40px; 
   box-sizing: border-box;
-  backface-visibility: hidden; /* Prevent flicker during shake */
-  transform: translateZ(0); /* Force GPU acceleration */
+  backface-visibility: hidden; 
+  transform: translateZ(0); 
+}
+
+.console-grid { padding: 20px; flex-grow: 1; }
+
+.task-list { display: flex; gap: 10px; margin-bottom: 30px; }
+
+.skills-grid { display: flex; flex-wrap: wrap; gap: 15px; }
+
+/* Buttons */
+button:hover { border-color: var(--color-focus-white); color: var(--color-focus-white); }
+button.active { background: var(--color-focus-white); color: var(--color-vortex-black); box-shadow: var(--glow-active); }
+
+.section-label {
+  color: var(--color-text-dim); 
+  font-size: 0.75rem; 
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin: 25px 0 12px 0; 
+  border-left: 4px solid var(--color-focus-white); 
+  padding-left: 12px;
+  text-shadow: 0 0 5px rgba(255,255,255,0.1);
+}
+
+button {
+  background: var(--color-panel-dark);
+  border: var(--border-standard);
+  color: var(--color-text-mid); 
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  min-height: 48px;
+  padding: 12px;
+  transition: var(--transition-smooth);
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg);}
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, 1px) rotate(1deg); }
+  90% { transform: translate(1px, 1px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.shake {
+  animation: shake 0.5s;
+  animation-iteration-count: infinite;
+}
+
+.shake::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255, 0, 0, 0.05); 
+  pointer-events: none; 
+  z-index: 100;
 }
 
 .version-info {
