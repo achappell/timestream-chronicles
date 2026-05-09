@@ -46,6 +46,11 @@
 ## 📜 ARCHIVAL PROTOCOL (Documentation Maintenance)
 * **Automatic Synchronization**: Every significant architectural change, logic refactor, or narrative addition MUST be reflected in the project's documentation immediately.
 * **Pre-Commit Verification Protocol**: The Agent MUST execute a full system build and run the entire test suite before every `git commit`. A commit is strictly forbidden if the build fails or any test does not return a "Pass" status.
+* **High-Fidelity Pre-Commit Review**: Before every commit, the Agent MUST perform a comprehensive code review of the proposed changes. This review must evaluate:
+    * **Architectural Integrity**: Ensure changes align with the "God Component" consolidation or future Pinia migration plans.
+    * **Style Compliance**: Verify strict adherence to the 1963 Monochrome aesthetic and mono-spaced technical readout standards.
+    * **Logic Accuracy**: Search for mathematical errors (e.g., compounding formula drift) or potential race conditions in the `tick` loop.
+    * **Technical Debt**: Identify any "hardcoded" values that should be moved to `theme.css` tokens.
 * **Lead Architect Control (No Pushing)**: The MK I Navigation Computer is AUTHORIZED to perform `git commit` to save timeline changes implemented by the Lead Architect. However, the Agent is STRICTLY FORBIDDEN from performing `git push`. Pushing changes to the remote repository is the exclusive responsibility of the Lead Architect.
 * **Agent Responsibility**: The Agent's responsibility is to review code changes made by the Lead Architect, ensure tests pass, and execute high-fidelity, gitmoji-led `git commit` operations. The Agent must never modify code or push to the remote.
 * **Notion Synchronization**: The project's `TODO.md` must be mirrored in the **"Timestream Chronicles"** Notion database (`35a4fc50-af3f-80bd-a16e-d267fbc731ca`). Every update to the local roadmap MUST be propagated to Notion to maintain a synchronized mission board.

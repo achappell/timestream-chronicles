@@ -7,7 +7,8 @@ describe('SkillCard Multiplier UI', () => {
     name: 'Temporal Physics',
     permanentMastery: 2, // Lvl 2
     currentFocus: 4,     // Lvl 4
-    focusXP: 150         // XP for next level (Lvl 4 -> 5 needs (4+1)*100 = 500)
+    focusXP: 150,       // XP for next level (Lvl 4 -> 5 needs (4+1)*100 = 500)
+    masteryXP: 150
   };
 
   it('calculates the combined multiplier correctly (1.2 * 1.2 = 1.44)', () => {
@@ -47,7 +48,8 @@ describe('SkillCard Multiplier UI', () => {
       name: 'Basic Survival',
       permanentMastery: 0,
       currentFocus: 0,
-      focusXP: 0
+      focusXP: 0,
+      masteryXP: 0
     };
     
     const wrapper = mount(SkillCard, {
