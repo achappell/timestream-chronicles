@@ -20,7 +20,7 @@
 ## 🛠️ TECHNICAL STACK & STANDARDS
 * **Environment**: Electron (Shell) + Vue 3 (Renderer) + TypeScript + Vite.
 * **CSS Architecture**:
-    * **Palette**: Primary White (`#fff`), Deep Black (`#050505`), Mastery Grey (`#666`), Focus White (`#fff` with glow).
+    * **System Variables**: All components must use the central 1963 Color System (Vortex Black, Panel Dark/Mid, Text Dim/Bright, Focus White, Accent Blue).
     * **Layout**: Use `display: flex` with `align-items: flex-start` to prevent vertical element stretching.
     * **Styling**: High-contrast borders, sharp edges (0px border-radius), and mono-spaced fonts.
 * **State Management**: Centralized `reactive` state in `App.vue` for the MVP.

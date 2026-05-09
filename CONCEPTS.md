@@ -27,9 +27,14 @@
 
 ### 📺 Visual & Technical Architecture
 
-- **The 1963 Aesthetic:** A monochrome, high-contrast palette using `#fff` and `#050505`. It utilizes a 4:3 aspect ratio and CSS-driven scanlines to mimic a CRT monitor in the TARDIS.
-
-- **The "Increlution" Grid:** A high-density dashboard that avoids scrolling by using compact `SkillCard` components that display multipliers and dual-lane progress bars in a single glance.
+- **The 1963 Aesthetic:** A monochrome-dominant, high-contrast palette. To ensure depth and hierarchy, the console utilizes a "Depth-Grayscale" system:
+    - `--color-vortex-black`: `#050505` (Deepest shadows)
+    - `--color-panel-dark`: `#111111` (Inactive panels)
+    - `--color-panel-mid`: `#222222` (Borders and separators)
+    - `--color-text-dim`: `#888888` (Labels and background telemetry)
+    - `--color-text-bright`: `#eeeeee` (Standard readout)
+    - `--color-focus-white`: `#ffffff` (Active state and glow)
+    - `--color-accent-blue`: `#00aaff` (Temporal highlights - used sparingly)
 
 - **Adaptive Console Layout:** The TARDIS console prioritizes a "Viewport-First" display. The application aims to fit all critical telemetry (Stability, Timeline, Skills) within the primary view without scrolling. Scrolling is permitted only when content density (e.g., a long mission queue or log) exceeds the available vertical space. Metadata like the build version must be anchored to the viewport edge to remain visible regardless of content length.
 
