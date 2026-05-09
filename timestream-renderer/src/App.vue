@@ -4,6 +4,7 @@ import GameHeader from './components/GameHeader.vue';
 import SkillCard from './components/SkillCard.vue';
 import { calculateEntropyRate, tick as engineTick, reanchorTimeline } from './logic/engine';
 import type { GameState } from './types';
+import ProgressBar from './components/ProgressBar.vue';
 
 const appVersion = __APP_VERSION__; // Injected at build time
 
@@ -14,6 +15,7 @@ const state: GameState = reactive({
   collapseTimer: 0,
   timeInLoop: 0,
   activeTaskId: null,
+  currentEra: 'Hartnell', 
   skills: {
     scientificInquiry: { 
       id: 'scientificInquiry',
@@ -41,7 +43,11 @@ const state: GameState = reactive({
       description: 'Practice moving unseen through the environment to improve your stealth skills.',
       skillId: 'stealth', 
       xpPerSec: 10, 
-      targetFocusLevel: 5
+      currentProgress: 0,
+      targetProgress: 100, 
+      completions: 0,
+      maxCompletions: 5,
+      unlocked: true 
     },
     { 
       id: 'analyze', 
@@ -49,7 +55,11 @@ const state: GameState = reactive({
       description: 'Examine the junkyard to uncover hidden knowledge and boost your scientific inquiry skills.',
       skillId: 'scientificInquiry', 
       xpPerSec: 15, 
-      targetFocusLevel: 10
+      currentProgress: 0,
+      targetProgress: 100, 
+      completions: 0,
+      maxCompletions: 5,
+      unlocked: true
     }
   ]
 });
@@ -74,7 +84,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="app-container" :class="{ shake: state.collapseTimer > 0
+  <div class="app-container" :data-era="state.currentEra" :class="{ shake: state.collapseTimer > 0
    }">
     <GameHeader 
       :isPaused="state.isPaused" 
@@ -99,11 +109,15 @@ onMounted(() => {
           :key="task.id"
           @click="state.activeTaskId = task.id"
           :class="{ 
-            active: state.activeTaskId === task.id ,
-            completed: state.skills[task.skillId].currentFocus >= task.targetFocusLevel
+            active: state.activeTaskId === task.id 
           }"
+        <ProgressBar 
+          :progress="task.currentProgress / task.targetProgress * 100" 
+          variant="secondary"
+          :label="task.name"
+          :count="`${task.completions}/${task.maxCompletions}`"
         >
-          {{ task.name }}
+        </ProgressBar>
         </button>
       </div>
 
@@ -122,7 +136,11 @@ onMounted(() => {
 
 <style>
 /* Reset and Container */
-body { margin: 0; background: #0a0a0a; color: #eee; font-family: 'Courier New', Courier, monospace; }
+body { 
+  margin: 0; 
+  background: var(--color-vortex-black); 
+  color: var(--color-text-bright); 
+  font-family: 'Courier New', Courier, monospace; }
 
 .app-container { min-height: 100vh; display: flex; flex-direction: column; }
 
@@ -134,25 +152,29 @@ body { margin: 0; background: #0a0a0a; color: #eee; font-family: 'Courier New', 
 
 /* Buttons */
 
-button:hover { border-color: #fff; color: #fff; }
-button.active { background: #fff; color: #000; box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+button:hover { border-color: var(--color-focus-white); color: var(--color-focus-white); }
+button.active { background: var(--color-focus-white); color: var(--color-vortex-black); box-shadow: var(--glow-active); }
 /* Inside App.vue <style> */
 .section-label {
-  color: #ccc; /* Light grey */
+  color: var(--color-text-dim); /* Light grey */
   font-size: 0.75rem; 
   font-weight: 800;
   letter-spacing: 2px;
   margin: 25px 0 12px 0; 
-  border-left: 4px solid #fff; /* Bright white accent */
+  border-left: 4px solid var(--color-focus-white); /* Bright white accent */
   padding-left: 12px;
   text-shadow: 0 0 5px rgba(255,255,255,0.1);
 }
 
 button {
-  background: #111;
-  border: 1px solid #555;
-  color: #ccc; /* Brighter default text */
-  /* ... existing styles ... */
+  background: var(--color-panel-dark);
+  border: var(--border-standard);
+  color: var(--color-text-mid); 
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  padding: 10px;
+  transition: var(--transition-smooth);
 }
 
 @keyframes shake {

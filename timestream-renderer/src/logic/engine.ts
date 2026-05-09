@@ -27,12 +27,20 @@ export function tick(state: GameState, delta: number) {
     if (activeTask) {
       // Calculate XP gain based on task difficulty and time
       const skill = state.skills[activeTask.skillId];
-      if (skill) {
-        if (skill.currentFocus >= activeTask.targetFocusLevel) {
-          state.activeTaskId = null; // Stop the task if target Focus level is reached
-        } else {
+
+      activeTask.currentProgress += delta;
+      if (activeTask.currentProgress >= activeTask.targetProgress) {
+        activeTask.currentProgress = 0;
+        activeTask.completions++;
+
+        if (skill) {
           updateSkill(skill, activeTask.xpPerSec, delta); // Update the skill with XP gain
         }
+        
+      }
+
+      if (activeTask.completions >= activeTask.maxCompletions) {
+        state.activeTaskId = null; // Stop the active task if max completions reached
       }
     }
   } 

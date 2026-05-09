@@ -48,8 +48,8 @@ const formattedTime = computed(() => {
 
 .stasis-btn {
   background: transparent;
-  color: #555;
-  border: 1px solid #555;
+  color: var(--color-text-dim);
+  border: var(--border-standard);
   padding: 5px 0;
   width: 120px;
   text-align: center;
@@ -60,34 +60,34 @@ const formattedTime = computed(() => {
 }
 
 .stasis-btn.active {
-  background: #fff;
-  color: #000;
-  border-color: #fff;
-  box-shadow: 0 0 20px #fff;
+  background: var(--color-focus-white);
+  color: var(--color-vortex-black);
+  border-color: var(--color-focus-white);
+  box-shadow: var(--glow-active);
 }
 
 .tardis-header {
   display: flex;
   justify-content: space-around;
-  background: #111;
-  border-bottom: 2px solid #333;
+  background: var(--color-panel-dark);
+  border-bottom: 2px solid var(--color-panel-light);
   padding: 10px;
   font-family: 'Courier New', Courier, monospace;
 }
 .stat { display: flex; flex-direction: column; align-items: center; }
-.mini-bar { width: 100px; height: 4px; background: #222; margin-top: 4px; }
-.fill { height: 100%; background: #fff; }
+.mini-bar { width: 100px; height: 4px; background: var(--color-panel-mid); margin-top: 4px; }
+.fill { height: 100%; background: var(--color-text-bright); }
 
 /* Inside GameHeader.vue <style> */
 .label { 
   font-size: 0.65rem; 
-  color: #aaa; /* Much more readable */
+  color: var(--color-text-mid); /* Much more readable */
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 .value { 
   font-size: 1.2rem; 
-  color: #fff; 
+  color: var(--color-text-bright); 
   font-weight: bold;
   text-shadow: 0 0 8px rgba(255,255,255,0.2); 
 }

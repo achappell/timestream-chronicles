@@ -14,7 +14,7 @@
 ## 📺 Visual & Technical Aesthetic
 
 The game follows a **1963 Aesthetic**:
-- Monochrome, high-contrast palette (`#fff` and `#050505`).
+- Monochrome, high-contrast palette (`#fff` and `var(--color-vortex-black)`).
 - Terminal-style typography and sharp, geometric layouts (0px border-radius).
 - CRT scanline and flicker overlays for period-accurate fidelity.
 - Frame-rate-independent "Heartbeat" loop powered by `requestAnimationFrame`.

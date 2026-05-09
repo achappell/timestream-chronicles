@@ -1,0 +1,26 @@
+[data-era="hartnell"] {
+    --color-vortex-black: #050505;
+    --color-panel-dark: #111111;
+    --color-panel-mid: #222222;
+    --color-panel-light: #333333;
+    --color-text-dim: #888888;
+    --color-text-mid: #aaaaaa;
+    --color-text-bright: #eeeeee;
+    --color-focus-white: #ffffff;
+    --color-accent-blue: #00aaff;
+
+    --transition-smooth: all 0.2s ease;
+    --transition-heartbeat: width 0.1s linear;
+
+    --font-technical: 'Courier New', Courier, monospace;
+    --text-shadow-glow: 0 0 8px rgba(255, 255, 255, 0.2);
+    --text-shadow-label: 1px 1px 2px #000;
+
+    --border-standard: 1px solid var(--color-panel-light);
+    --border-active: 1px solid var(--color-focus-white);
+    --border-subtle: 1px solid var(--color-panel-mid);
+
+    --glow-primary: 0 0 10px rgba(255, 255, 255, 0.4);
+    --glow-active: 0 0 15px rgba(255, 255, 255, 0.3);
+    --shadow-elevation: 0 4px 6px rgba(0,0,0,0.3);
+    }

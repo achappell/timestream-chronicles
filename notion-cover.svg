@@ -1,6 +1,6 @@
 <svg width="1500" height="600" viewBox="0 0 1500 600" xmlns="http://www.w3.org/2000/svg">
   <!-- Background: Deep Black -->
-  <rect width="100%" height="100%" fill="#050505"/>
+  <rect width="100%" height="100%" fill="var(--color-vortex-black)"/>
   
   <!-- Stylized Scanlines -->
   <defs>
@@ -10,7 +10,7 @@
     
     <radialGradient id="vortexGrad" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
       <stop offset="0%" stop-color="#fff" stop-opacity="0.1" />
-      <stop offset="100%" stop-color="#050505" stop-opacity="0" />
+      <stop offset="100%" stop-color="var(--color-vortex-black)" stop-opacity="0" />
     </radialGradient>
   </defs>
   

@@ -63,23 +63,23 @@ const masteryXPWidth = computed(() => (props.skill.masteryXP % 1000) / 1000 * 5)
 .bar-mastery {
   position: absolute;
   height: 100%;
-  background: #444; /* Solid Grey */
+  background: var(--color-text-dim); /* Solid Grey */
   z-index: 3;
 }
 
 .bar-mastery-xp {
   position: absolute;
   height: 100%;
-  background: #222; /* Very Dark Grey/Ghost bar */
-  border-right: 1px solid #333;
+  background: var(--color-panel-mid); /* Very Dark Grey/Ghost bar */
+  border-right: var(--border-subtle);
   z-index: 2;
 }
 
 .bar-focus {
   position: absolute;
   height: 100%;
-  background: #fff;
-  box-shadow: 0 0 10px #fff;
+  background: var(--color-focus-white);
+  box-shadow: var(--glow-primary);
   z-index: 4; /* Sits on top of everything */
 }
 
@@ -87,8 +87,8 @@ const masteryXPWidth = computed(() => (props.skill.masteryXP % 1000) / 1000 * 5)
   position: relative;
   height: 16px; /* FIXED HEIGHT is the key here */
   width: 100%;
-  border: 1px solid #444;
-  background: #111;
+  border: var(--border-standard);
+  background: var(--color-panel-dark);
   overflow: hidden;
 }
 </style>

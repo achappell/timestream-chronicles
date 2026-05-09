@@ -18,10 +18,10 @@
     - [X] **Adaptive Layout Fix**: Use `position: fixed` or `absolute` for version info and apply `box-sizing: border-box` to the main container (or globally) to ensure `min-height: 100vh` doesn't cause overflow with padding.
     - [X] Update `deploy.yaml` to ensure the SHA is correctly captured in the GitHub Actions build environment.
 
-- **[ ] Shared UI Protocol**:
-    - [ ] Create `ProgressBar.vue` shared component to centralize "Glow" and "Scanline" bar styles.
-    - [ ] Refactor `SkillCard.vue` and `SkillBar.vue` to use the shared `ProgressBar`.
-    - [ ] Update `App.vue` mission cycles to use the shared `ProgressBar`.
+- **[X] Shared UI Protocol**:
+    - [X] Create `ProgressBar.vue` shared component to centralize "Glow" and "Scanline" bar styles.
+    - [X] Refactor `SkillCard.vue` and `SkillBar.vue` to use the shared `ProgressBar`.
+    - [X] Update `App.vue` mission cycles to use the shared `ProgressBar`.
 
 - **[ ] The Inventory Protocol:**
     - Add `inventory: Record<string, number>` to the state.
@@ -49,11 +49,11 @@
 
 - **[X] Stasis Button Fidelity:** Apply fixed-width CSS to the Stasis button to prevent header layout jitter when text changes.
 
-- **[ ] 1963 Design System (Two-Layer Architecture)**:
-    - [ ] **Layer 1 (Tokens)**: Create `timestream-renderer/src/assets/theme.css` with systematic variables.
-    - [ ] **Layer 2 (Patterns)**: Ensure `ProgressBar.vue` and other shared components consume Tokens rather than hardcoded colors.
-    - [ ] **Regeneration Architecture**: Wrap Variables in `[data-era="hartnell"]` for future-proofing.
-    - [ ] Link `theme.css` in `main.ts`.
+- **[X] 1963 Design System (Two-Layer Architecture)**:
+    - [X] **Layer 1 (Tokens)**: Create `timestream-renderer/src/assets/theme.css` with systematic variables.
+    - [X] **Layer 2 (Patterns)**: Ensure `ProgressBar.vue` and other shared components consume Tokens rather than hardcoded colors.
+    - [X] **Regeneration Architecture**: Wrap Variables in `[data-era="hartnell"]` for future-proofing.
+    - [X] Link `theme.css` in `main.ts`.
 
 - **[ ] CRT Overlay:** Add a persistent `::after` pseudo-element on the main container with a linear-gradient for scanlines and a 2% opacity "flicker" animation.
     

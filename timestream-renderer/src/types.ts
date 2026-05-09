@@ -19,6 +19,7 @@ export interface GameState {
   collapseTimer: number; // Timer to manage collapse duration
   timeInLoop: number; // Total time spent in the current loop
   activeTaskId: string | null;
+  currentEra: string;
   skills: Record<string, Skill>;
   tasks: Task[];
 }
@@ -29,6 +30,9 @@ export interface Task {
   description: string;
   skillId: string;    // Maps to the key in state.skills (e.g., 'stealth')
   xpPerSec: number;   // Base XP awarded per second
-  unlocked?: boolean; // Optional: for progression logic
-  targetFocusLevel: number; // Optional: for tasks that require reaching a certain Focus level
+  unlocked: boolean; // for progression logic
+  currentProgress: number; // track progress toward completion
+  targetProgress: number; // define what "completion" means (e.g., reach Focus level 5)
+  completions: number; // track how many times this task has been completed
+  maxCompletions: number; // limit how many times this task can be completed
 }
