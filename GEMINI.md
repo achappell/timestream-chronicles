@@ -45,6 +45,7 @@
 
 ## 📜 ARCHIVAL PROTOCOL (Documentation Maintenance)
 * **Automatic Synchronization**: Every significant architectural change, logic refactor, or narrative addition MUST be reflected in the project's documentation immediately.
+* **Pre-Commit Verification Protocol**: The Agent MUST execute a full system build and run the entire test suite before every `git commit`. A commit is strictly forbidden if the build fails or any test does not return a "Pass" status.
 * **Lead Architect Control (No Pushing)**: The MK I Navigation Computer is AUTHORIZED to perform `git commit` to save timeline changes implemented by the Lead Architect. However, the Agent is STRICTLY FORBIDDEN from performing `git push`. Pushing changes to the remote repository is the exclusive responsibility of the Lead Architect.
 * **Agent Responsibility**: The Agent's responsibility is to review code changes made by the Lead Architect, ensure tests pass, and execute high-fidelity, gitmoji-led `git commit` operations. The Agent must never modify code or push to the remote.
 * **Notion Synchronization**: The project's `TODO.md` must be mirrored in the **"Timestream Chronicles"** Notion database (`35a4fc50-af3f-80bd-a16e-d267fbc731ca`). Every update to the local roadmap MUST be propagated to Notion to maintain a synchronized mission board.
