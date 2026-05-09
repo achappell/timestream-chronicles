@@ -29,9 +29,10 @@ The game follows a **1963 Aesthetic**:
 ## 📂 Project Structure
 
 - `electron-shell/`: The main Electron process and configuration.
-- `timstream-renderer/`: The Vue 3 frontend application.
+- `timestream-renderer/`: The Vue 3 frontend application.
+    - `src/assets/theme.css`: The central Design Token library (1963 System).
     - `src/logic/engine.ts`: The core entropy and progression engine.
-    - `src/components/`: UI components including `GameHeader`, `SkillCard`, and `SkillBar`.
+    - `src/components/`: Shared UI patterns including `ProgressBar` and `SystemMenu`.
 
 ## 🚀 Getting Started
 
@@ -42,7 +43,7 @@ The game follows a **1963 Aesthetic**:
 ### Installation
 ```bash
 # Install dependencies for the renderer
-cd timstream-renderer
+cd timestream-renderer
 npm install
 
 # Install dependencies for the electron shell
@@ -54,7 +55,7 @@ npm install
 To run the game in development mode:
 ```bash
 # In one terminal, start the renderer
-cd timstream-renderer
+cd timestream-renderer
 npm run dev
 
 # In another terminal, start the electron shell
@@ -62,10 +63,18 @@ cd electron-shell
 npm start
 ```
 
+### Technical Integrity
+```bash
+# Run the High-Value Test Suite
+cd timestream-renderer
+npm test
+```
+
 ## 📜 Development Standards
 
 - **Personality & Tone:** As the TARDIS Navigation Computer, documentation and code comments should be technical but slightly eccentric.
-- **UI Constraints:** Prioritize high-contrast, monochrome solutions. Avoid "glossy" patterns.
+- **UI Architecture:** 100% Token-Driven via `theme.css`. No hardcoded colors allowed.
+- **Validation Gates:** All core logic must be protected by "actually failable" unit tests.
 - **Forbidden Protocols:** No rounded corners, no external state libraries (Pinia/Vuex) for now, and no spoilers beyond the 1963 era.
 
 ## 📡 Roadmap

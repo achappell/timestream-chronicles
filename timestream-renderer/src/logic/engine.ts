@@ -25,22 +25,23 @@ export function tick(state: GameState, delta: number) {
   if (state.activeTaskId) {
     const activeTask = state.tasks.find(task => task.id === state.activeTaskId);
     if (activeTask) {
-      // Calculate XP gain based on task difficulty and time
       const skill = state.skills[activeTask.skillId];
 
+      // 1. Continuous XP Award (Updates Skill Bars smoothly)
+      if (skill) {
+        updateSkill(skill, activeTask.xpPerSec, delta);
+      }
+
+      // 2. Advance Cycle Progress
       activeTask.currentProgress += delta;
       if (activeTask.currentProgress >= activeTask.targetProgress) {
         activeTask.currentProgress = 0;
         activeTask.completions++;
-
-        if (skill) {
-          updateSkill(skill, activeTask.xpPerSec, delta); // Update the skill with XP gain
-        }
-        
       }
 
+      // 3. Mission Completion
       if (activeTask.completions >= activeTask.maxCompletions) {
-        state.activeTaskId = null; // Stop the active task if max completions reached
+        state.activeTaskId = null;
       }
     }
   } 
