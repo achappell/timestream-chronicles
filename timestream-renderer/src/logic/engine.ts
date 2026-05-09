@@ -33,7 +33,8 @@ export function tick(state: GameState, delta: number) {
       }
 
       // 2. Advance Cycle Progress
-      activeTask.currentProgress += delta;
+      const multiplier = (1 + skill.permanentMastery * 0.1) * (1 * skill.currentFocus * 0.05); // Mastery and Focus can speed up progress
+      activeTask.currentProgress += delta * multiplier;
       if (activeTask.currentProgress >= activeTask.targetProgress) {
         activeTask.currentProgress = 0;
         activeTask.completions++;
@@ -59,9 +60,8 @@ export function tick(state: GameState, delta: number) {
 }
 
 export function updateSkill(skill: Skill, taskXP: number, delta: number) {
-  const learningMultiplier = 1 + (skill.permanentMastery * MASTERY_FACTOR);
-  
-  skill.focusXP += taskXP * learningMultiplier * delta;
+  const multiplier = 1 + (skill.permanentMastery * 0.1) * (1 + skill.currentFocus * 0.05); // Mastery and Focus can speed up learning
+  skill.focusXP += taskXP * multiplier * delta;
   const focusThreshold = (skill.currentFocus + 1) * 100;
   if (skill.focusXP >= focusThreshold) {
     skill.focusXP -= focusThreshold;
