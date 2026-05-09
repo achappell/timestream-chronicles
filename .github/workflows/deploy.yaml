@@ -23,12 +23,21 @@ jobs:
           cache: 'npm'
           cache-dependency-path: './timestream-renderer/package-lock.json'
 
-      - name: Install and Build
+      - name: Install
+        run: |
+          cd timestream-renderer
+          npm install
+
+      - name: Run High-Value Tests
+        run: |
+          cd timestream-renderer
+          npm test
+
+      - name: Build
         env:
           VITE_GIT_HASH: ${{ github.sha }}
         run: |
           cd timestream-renderer
-          npm install
           npm run build
 
       - name: Setup Pages

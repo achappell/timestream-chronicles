@@ -23,10 +23,10 @@
     - [X] Refactor `SkillCard.vue` and `SkillBar.vue` to use the shared `ProgressBar`.
     - [X] Update `App.vue` mission cycles to use the shared `ProgressBar`.
 
-- **[ ] High-Value Testing Protocol**:
+- **[X] High-Value Testing Protocol**:
     - [ ] Install **Vitest** for engine unit testing.
     - [X] Create `engine.test.ts` to validate Entropy Scaling, Safety Stasis, and XP Multipliers.
-    - [ ] Integrate test run into GitHub Actions build pipeline.
+    - [X] Integrate test run into GitHub Actions build pipeline.
 
 - **[ ] The Inventory Protocol:**
     - Add `inventory: Record<string, number>` to the state.
