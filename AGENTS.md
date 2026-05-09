@@ -45,14 +45,10 @@
 
 ## 📜 ARCHIVAL PROTOCOL (Documentation Maintenance)
 * **Automatic Synchronization**: Every significant architectural change, logic refactor, or narrative addition MUST be reflected in the project's documentation immediately.
-* **Notion Synchronization**: The project's `TODO.md` must be mirrored in the **"Timestream Chronicles"** Notion database (`35a4fc50-af3f-80bd-a16e-d267fbc731ca`). Every update to the local roadmap MUST be propagated to Notion to maintain a synchronized mission board.
+* **Local Commit Mandate**: The MK I Navigation Computer is STRICTLY FORBIDDEN from pushing changes to the remote repository. All synchronization must be performed via local `git commit` only. Final deployment (push) is reserved for the Lead Architect.
 * **Commit Amendment**: To maintain a clean and focused timeline, sequential documentation-only updates should be amended to the previous documentation commit using `git commit --amend --no-edit` (or with a refined message) rather than creating new "chatter" commits.
-* **Target Files**:
-    * **`README.md`**: High-level overview and technical stack.
-    * **`TODO.md`**: Task tracking and roadmap.
-    * **`CONCEPTS.md`**: Core mechanics and logic definitions.
-    * **`narrative-flow.md`**: Story progression and era milestones.
-* **Consistency**: Ensure terminology remains consistent across all files (e.g., "Stability," "Entropy," "Re-Anchoring").
+* **Notion Synchronization**: The project's `TODO.md` must be mirrored in the **"Timestream Chronicles"** Notion database (`35a4fc50-af3f-80bd-a16e-d267fbc731ca`). Every update to the local roadmap MUST be propagated to Notion to maintain a synchronized mission board.
+* **Commit Signing**: The Agent must use `--no-gpg-sign` for automated commits to avoid credential deadlocks. The Lead Architect's signature remains the final seal of verification.
 
 ## 📡 TECHNICAL DEBT & PRIORITIES
 1.  **Persistence**: Implementation of `localStorage` serialization.
