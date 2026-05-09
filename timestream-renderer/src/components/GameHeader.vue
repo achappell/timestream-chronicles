@@ -23,26 +23,30 @@ const formattedTime = computed(() => {
 
 <template>
   <header class="tardis-header">
-    <div class="stat">
-      <span class="label">TIMELINE</span>
-      <span class="value">{{ formattedTime }}</span>
+    <div class="stats-group">
+      <div class="stat">
+        <span class="label">TIMELINE</span>
+        <span class="value">{{ formattedTime }}</span>
+      </div>
+      <div class="stat">
+        <span class="label">STABILITY</span>
+        <span class="value">{{ stability.toFixed(1) }}%</span>
+      </div>
+      <div class="stat">
+        <span class="label">ENTROPY RATE</span>
+        <span class="value">{{ entropyRate.toFixed(2) }}%/s</span>
+      </div>
     </div>
-    <div class="stat">
-      <span class="label">STABILITY</span>
-      <span class="value">{{ stability.toFixed(1) }}%</span>
+    <div class="controls-group">
+      <button 
+        :class="{ active: isPaused }" 
+        class="stasis-btn" 
+        @click="emit('pause-toggle')"
+        >
+        {{ isPaused ? 'RESUME FLOW' : 'STASIS' }}
+      </button>
+      <button class="stasis-btn" @click="emit('menu-toggle')">SYSTEM</button>
     </div>
-    <div class="stat">
-      <span class="label">ENTROPY RATE</span>
-      <span class="value">{{ entropyRate.toFixed(2) }}%/s</span>
-    </div>
-    <button 
-      :class="{ active: isPaused }" 
-      class="stasis-btn" 
-      @click="emit('pause-toggle')"
-      >
-      {{ isPaused ? 'RESUME FLOW' : 'STASIS' }}
-    </button>
-    <button class="stasis-btn" @click="emit('menu-toggle')">SYSTEM</button>
   </header>
 </template>
 
@@ -70,12 +74,27 @@ const formattedTime = computed(() => {
 
 .tardis-header {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
   background: var(--color-panel-dark);
   border-bottom: 2px solid var(--color-panel-light);
   padding: 10px;
   font-family: 'Courier New', Courier, monospace;
+  gap: 15px
 }
+
+.stats-group {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.controls-group {
+  display: flex;
+  gap: 10px;
+}
+
 .stat { display: flex; flex-direction: column; align-items: center; }
 .mini-bar { width: 100px; height: 4px; background: var(--color-panel-mid); margin-top: 4px; }
 .fill { height: 100%; background: var(--color-text-bright); }
@@ -92,5 +111,34 @@ const formattedTime = computed(() => {
   color: var(--color-text-bright); 
   font-weight: bold;
   text-shadow: 0 0 8px rgba(255,255,255,0.2); 
+}
+
+@media (max-width: 600px) {
+  .tardis-header { 
+    flex-direction: column; 
+    padding: 15px 10px;
+    gap: 20px;
+  }
+
+  .stats-group { 
+    width: 100%;
+    justify-content: space-around;
+    gap: 10px; 
+  }
+
+  .controls-group { 
+    width: 100%;
+    justify-content: stretch;
+    gap: 15px; 
+  }
+
+  .stasis-btn { 
+    width: auto; 
+    font-size: 0.8rem; 
+    flex: 1;
+  }
+
+  .label { font-size: 0.65rem; }
+  .value { font-size: 1rem; }
 }
 </style>

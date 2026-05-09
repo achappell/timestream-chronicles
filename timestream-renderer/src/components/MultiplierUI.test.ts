@@ -62,4 +62,20 @@ describe('SkillCard Multiplier UI', () => {
     expect(tooltip.text()).toContain('FCS XP: 0 / 100');
     expect(tooltip.text()).toContain('TOTAL: 1.00x');
   });
+
+  it('multiplier container should be touch-accessible (has tabindex)', () => {
+    const skill = {
+      name: 'Test Skill',
+      permanentMastery: 0,
+      currentFocus: 0,
+      focusXP: 0,
+      masteryXP: 0
+    };
+    
+    const wrapper = mount(SkillCard, {
+      props: { skill }
+    });
+    
+    expect(wrapper.find('.multiplier-container').attributes('tabindex')).toBe('0');
+  });
 });

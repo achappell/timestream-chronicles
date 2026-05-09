@@ -199,9 +199,20 @@ const handleExport = () => {
   transform: translateZ(0); 
 }
 
-.console-grid { padding: 20px; flex-grow: 1; }
+.console-grid { 
+  padding: 20px; 
+  flex-grow: 1; 
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-.task-list { display: flex; gap: 10px; margin-bottom: 30px; }
+.task-list { 
+  display: flex; 
+  gap: 10px; 
+  margin-bottom: 30px; 
+  flex-wrap: wrap;
+}
 
 .skills-grid { display: flex; flex-wrap: wrap; gap: 15px; }
 
@@ -321,5 +332,20 @@ button {
   pointer-events: none;
   opacity: 0.02;
   animation: crt-flicker 0.1s infinite;
+}
+
+@media (max-width: 600px) {
+  .console-grid {
+    padding: 10px;
+  }
+  
+  .task-list {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .skills-grid {
+    justify-content: center;
+  }
 }
 </style>

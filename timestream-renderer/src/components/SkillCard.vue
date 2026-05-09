@@ -36,7 +36,7 @@ const masteryProgress = computed(() => {
     <div class="card-top">
       <span class="skill-icon">⌬</span>
       <span class="skill-name">{{ skill.name }}</span>
-      <div class="multiplier-container">
+      <div class="multiplier-container" tabindex="0">
         <span class="multiplier">× {{ totalMult }}</span>
         <div class="multiplier-tooltip">
           <div class="tooltip-header">Mastery Diagnostics</div>
@@ -72,7 +72,8 @@ const masteryProgress = computed(() => {
 .skill-card {
   background: var(--color-panel-dark); /* Slightly lighter background */
   border: var(--border-standard);
-  width: 240px; /* Bit more width for text breathing room */
+  width: 100%; /* Bit more width for text breathing room */
+  max-width: 300px;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -122,7 +123,7 @@ const masteryProgress = computed(() => {
   display: none;
   top: 100%;
   right: 0;
-  z-index: 10;
+  z-index: 1001;
   background: var(--color-vortex-black);
   border: var(--border-active);
   padding: 8px;
@@ -132,7 +133,9 @@ const masteryProgress = computed(() => {
   margin-top: 8px;
 }
 
-.multiplier-container:hover .multiplier-tooltip {
+.multiplier-container:hover .multiplier-tooltip,
+.multiplier-container:focus .multiplier-tooltip,
+.multiplier-container:focus-within .multiplier-tooltip {
   display: block;
 }
 
