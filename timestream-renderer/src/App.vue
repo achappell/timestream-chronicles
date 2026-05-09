@@ -40,30 +40,30 @@ const DEFAULT_STATE: GameState = {
     }
   },
   tasks: [
-    { 
-      id: 'lurk', 
-      name: 'Lurk in Shadows', 
-      description: 'Practice moving unseen through the environment to improve your stealth skills.',
-      skillId: 'stealth', 
-      xpPerSec: 10, 
-      currentProgress: 0,
-      targetProgress: 100, 
-      completions: 0,
-      maxCompletions: 5,
-      unlocked: true 
-    },
-    { 
-      id: 'analyze', 
-      name: 'Analyze Junkyard', 
-      description: 'Examine the junkyard to uncover hidden knowledge and boost your scientific inquiry skills.',
-      skillId: 'scientificInquiry', 
-      xpPerSec: 15, 
-      currentProgress: 0,
-      targetProgress: 100, 
-      completions: 0,
-      maxCompletions: 5,
-      unlocked: true
-    }
+  { 
+    id: 'lurk', 
+    name: 'Lurk in Shadows', 
+    description: 'Practice moving unseen through the environment to improve your stealth skills.',
+    skillId: 'stealth', 
+    xpPerSec: 10, 
+    currentProgress: 0,
+    targetProgress: 100, 
+    completions: 0,
+    maxCompletions: 5,
+    unlocked: true 
+  },
+  { 
+    id: 'analyze', 
+    name: 'Analyze Junkyard', 
+    description: 'Examine the junkyard to uncover hidden knowledge and boost your scientific inquiry skills.',
+    skillId: 'scientificInquiry', 
+    xpPerSec: 15, 
+    currentProgress: 0,
+    targetProgress: 100, 
+    completions: 0,
+    maxCompletions: 5,
+    unlocked: true
+  }
   ]
 };
 
@@ -79,7 +79,7 @@ const tick = () => {
   const now = performance.now();
   const delta = (now - lastTick) / 1000;
   lastTick = now;
-
+  
   engineTick(state, delta);
   requestAnimationFrame(tick);
 };
@@ -124,8 +124,7 @@ const handleExport = () => {
 </script>
 
 <template>
-  <div class="app-container" :data-era="state.currentEra" :class="{ shake: state.collapseTimer > 0
-   }">
+  <div class="app-container" :data-era="state.currentEra" :class="{ shake: state.collapseTimer > 0 }">
     <GameHeader 
       :isPaused="state.isPaused" 
       :stability="state.stability"
@@ -134,11 +133,13 @@ const handleExport = () => {
       @pause-toggle="state.isPaused = !state.isPaused"
       @menu-toggle="isMenuOpen = !isMenuOpen"
     />
-    <SystemMenu v-if="isMenuOpen" 
+    <SystemMenu 
+      v-if="isMenuOpen" 
       @save="handleManualSave" 
       @hard-reset="handleHardReset" 
       @import-save="handleImport" 
-      @export-save="handleExport"/>
+      @export-save="handleExport"
+    />
     <button
       v-if="state.stability <= 0"
       @click="handleReanchor"
@@ -156,15 +157,13 @@ const handleExport = () => {
           @click="state.activeTaskId = task.id"
           :class="{ 
             active: state.activeTaskId === task.id 
-          }"
-        >
-        <ProgressBar 
-          :progress="task.currentProgress / task.targetProgress * 100" 
-          variant="secondary"
-          :label="task.name"
-          :count="`${task.completions}/${task.maxCompletions}`"
-        >
-        </ProgressBar>
+          }">
+          <ProgressBar 
+            :progress="task.currentProgress / task.targetProgress * 100" 
+            variant="secondary"
+            :label="task.name"
+            :count="`${task.completions}/${task.maxCompletions}`">
+          </ProgressBar>
         </button>
       </div>
 
@@ -181,6 +180,7 @@ const handleExport = () => {
       <button class="reset-btn" @click="clearSave">HARD RESET</button>
       Version: {{ appVersion }}
     </div>
+    <div class="crt-overlay"></div>
   </div>
 </template>
 
@@ -287,4 +287,39 @@ button {
   align-items: center;
 }
 
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: 
+  linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%),
+  radial-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 100%);
+  z-index: 999;
+  pointer-events: none;
+  background-size: 100% 4px, 100% 100%;
+}
+
+.crt-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 200%;
+  background: linear-gradient(rgba(255, 255, 255, 0.08), transparent 25%, transparent);
+  pointer-events: none;
+  animation: scanline-roll 12s linear infinite;
+  opacity: 0.1;
+}
+
+.crt-overlay::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+  opacity: 0.02;
+  animation: crt-flicker 0.1s infinite;
+}
 </style>

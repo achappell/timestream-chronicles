@@ -41,4 +41,18 @@ html, body {
     --glow-primary: 0 0 10px rgba(255, 255, 255, 0.4);
     --glow-active: 0 0 15px rgba(255, 255, 255, 0.3);
     --shadow-elevation: 0 4px 6px rgba(0,0,0,0.3);
-    }
+}
+
+@keyframes crt-flicker {
+    0% { opacity: 0.015; }
+    5% { opacity: 0.02; }
+    10% { opacity: 0.01; }
+    15% { opacity: 0.03; }
+    20% { opacity: 0.015; }
+    100% { opacity: 0.02; }
+}
+
+@keyframes scanline-roll {
+    0% { transform: translateY(-100vh); }
+    100% { transform: translateY(100vh);}
+}

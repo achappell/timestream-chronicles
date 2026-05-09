@@ -7,7 +7,8 @@ describe('SkillCard.vue', () => {
     name: 'Scientific Inquiry',
     permanentMastery: 2,
     currentFocus: 1,
-    focusXP: 150
+    focusXP: 150,
+    masteryXP: 150
   };
 
   it('renders skill name correctly', () => {
@@ -41,8 +42,8 @@ describe('SkillCard.vue', () => {
     const progressBars = wrapper.findAllComponents({ name: 'ProgressBar' });
     expect(progressBars.length).toBe(2);
     
-    // MST bar: 2 * 5 = 10
-    expect(progressBars[0].props('progress')).toBe(10);
+    // MST bar: 150/300 = 50
+    expect(progressBars[0].props('progress')).toBe(50);
     expect(progressBars[0].props('label')).toBe('MST');
     
     // FCS bar: xpNeeded for level 1 is (1 + 1) * 100 = 200. progress is (150 / 200) * 100 = 75

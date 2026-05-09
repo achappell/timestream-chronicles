@@ -1,6 +1,5 @@
 import type { GameState, Skill } from "../types";
 
-const MASTERY_FACTOR = 0.1; // Mastery makes you learn 10% faster per level
 const BASE_STABILITY_DECAY = 0.5; // Base stability decay per second when a task is active
 const SCALING_FACTOR = 0.1; // Scaling factor for XP gain to prevent runaway growth
 
@@ -68,9 +67,9 @@ export function updateSkill(skill: Skill, taskXP: number, delta: number) {
     skill.currentFocus++;
   }
   
-  skill.masteryXP += taskXP * 0.01 * delta;
+  skill.masteryXP += taskXP * 0.1 * delta;
 
-  const masteryThreshold = 100;
+  const masteryThreshold = (skill.permanentMastery + 1) * 100;
   if (skill.masteryXP >= masteryThreshold) {
     skill.masteryXP -= masteryThreshold;
     skill.permanentMastery++;

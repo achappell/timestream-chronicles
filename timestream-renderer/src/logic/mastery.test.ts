@@ -8,13 +8,13 @@ describe("Mastery Progression (Real-Time)", () => {
     const skillKey = Object.keys(state.skills)[0];
     const skill = state.skills[skillKey];
     
-    skill.masteryXP = 99.9; 
+    skill.masteryXP = 99; 
     skill.permanentMastery = 0;
     
     // updateSkill(skill, taskXP, delta)
     // We need 0.1 more masteryXP. 
-    // Mastery XP gain is taskXP * 0.01 * delta.
-    // If taskXP is 100 and delta is 0.1, gain is 100 * 0.01 * 0.1 = 0.1
+    // Mastery XP gain is taskXP * 0.1 * delta.
+    // If taskXP is 100 and delta is 0.1, gain is 100 * 0.1 * 0.1 = 1
     updateSkill(skill, 100, 0.1);
     
     expect(skill.permanentMastery).toBe(1);

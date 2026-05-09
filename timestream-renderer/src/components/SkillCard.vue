@@ -20,14 +20,15 @@ const totalMult = computed(() => (mstMult.value * fcsMult.value).toFixed(2));
 const fcsXpTotal = computed(() => (props.skill.currentFocus + 1) * 100);
 const masteryXpTotal = computed(() => (props.skill.permanentMastery + 1) * 100);
 
-// We use 100 as the base XP for Focus levels in the MVP
 const focusProgress = computed(() => {
   const xpNeeded = (props.skill.currentFocus + 1) * 100; // XP needed for next focus level
   return (props.skill.focusXP / xpNeeded) * 100;
 });
 
-// Mastery Progress - each level is 5% of the bar width
-const masteryProgress = computed(() => Math.min(props.skill.permanentMastery * 5, 100));
+const masteryProgress = computed(() => {
+  const xpNeeded = (props.skill.permanentMastery + 1) * 100; // XP needed for next mastery level
+  return (props.skill.masteryXP / xpNeeded) * 100;
+});
 </script>
 
 <template>
@@ -89,7 +90,7 @@ const masteryProgress = computed(() => Math.min(props.skill.permanentMastery * 5
 
 .skill-name { 
   color: var(--color-text-bright); 
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 800;
   text-transform: uppercase;
 }
