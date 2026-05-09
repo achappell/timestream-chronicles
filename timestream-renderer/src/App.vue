@@ -201,7 +201,15 @@ button {
 .shake {
   animation: shake 0.5s;
   animation-iteration-count: infinite;
-  background-color: rgba(255, 0, 0, 0.05); /* Subtle red tint during collapse */
+}
+
+.shake::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255, 0, 0, 0.05); /* Subtle red tint overlay */
+  pointer-events: none; /* Don't block clicks */
+  z-index: 100;
 }
 
 .app-container {
