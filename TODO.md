@@ -27,6 +27,7 @@
     - [ ] Install **Vitest** for engine unit testing.
     - [X] Create `engine.test.ts` to validate Entropy Scaling, Safety Stasis, and XP Multipliers.
     - [X] Integrate test run into GitHub Actions build pipeline.
+    - [X] Configure **Coverage Gutters** (lcov) for VSCode visual feedback.
 
 - **[ ] The Inventory Protocol:**
     - Add `inventory: Record<string, number>` to the state.

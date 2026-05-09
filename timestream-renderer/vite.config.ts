@@ -10,6 +10,12 @@ export default defineConfig({
   base: '/timestream-chronicles/',
   plugins: [vue()],
   define: {
-  '__APP_VERSION__': JSON.stringify(`${process.env.npm_package_version}-${gitHash}`),
+    '__APP_VERSION__': JSON.stringify(`${process.env.npm_package_version}-${gitHash}`),
+  },
+  test: {
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'lcov'],
+    },
   },
 })
