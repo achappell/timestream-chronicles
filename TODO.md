@@ -109,7 +109,7 @@
 
 ### 🛠️ Codebase Review Findings (May 2026)
 
-- **[ ] [BUG] Missing Mastery Progression:** `permanentMastery` attribute is never updated in `src/logic/engine.ts`. Needs integration into prestige (`reanchorTimeline`) mechanics.
+- **[X] [BUG] Missing Mastery Progression:** `permanentMastery` attribute is never updated in `src/logic/engine.ts`. Needs integration into prestige (`reanchorTimeline`) mechanics. (Implemented real-time growth in updateSkill).
 - **[X] [BUG] UI Sync Bug in SkillCard:** `SkillCard.vue` calculates `focusProgress` using `% 100`, but engine uses `(level + 1) * 100`. The UI progress bar falls out of sync with actual progression.
 - **[X] [BUG] Fragile Imports in Persistence:** `importSave` function and its usage in `App.vue` lack the robust merge strategy found in `loadGame`. Importing outdated schemas can cause crashes.
 - **[ ] [Architecture] State Management Refactor:** `App.vue` acts as a "God Component". Transition state management to Pinia for better scalability and separation of concerns.
