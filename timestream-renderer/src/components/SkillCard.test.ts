@@ -45,8 +45,8 @@ describe('SkillCard.vue', () => {
     expect(progressBars[0].props('progress')).toBe(10);
     expect(progressBars[0].props('label')).toBe('MST');
     
-    // FCS bar: 150 % 100 = 50
-    expect(progressBars[1].props('progress')).toBe(50);
+    // FCS bar: xpNeeded for level 1 is (1 + 1) * 100 = 200. progress is (150 / 200) * 100 = 75
+    expect(progressBars[1].props('progress')).toBe(75);
     expect(progressBars[1].props('label')).toBe('FCS');
   });
 });
