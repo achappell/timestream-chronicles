@@ -43,12 +43,14 @@
 - **[X] Type Safety Audit:** Align `reactive` state with `GameState` interface.
 
 ### 💾 Data Persistence: The "Tardis Memory"
-...
-- **[ ] LocalStorage Serialization:** Write a watcher or a 30-second interval that `JSON.stringify`s the state and saves it to `localStorage`.
-    
-- **[ ] State Hydration:** Create a function that runs on `onMounted` to check for an existing save and merge it with the default state (handling potential schema changes).
-    
-- **[ ] The "Hard Reset" Protocol:** Add a hidden or small button to clear the save—essential for testing the "New Game" flow.
+
+- **[X] LocalStorage Serialization:** Write a watcher or a 30-second interval that `JSON.stringify`s the state and saves it to `localStorage`.
+
+- **[X] State Hydration:** Create a function that runs on `onMounted` to check for an existing save and merge it with the default state (handling potential schema changes).
+
+- **[X] The "Hard Reset" Protocol:** Add a hidden or small button to clear the save—essential for testing the "New Game" flow.
+
+- **[ ] Save Key Versioning:** Implement a versioning strategy for the `SAVE_KEY` (e.g., `v1` to `v2`) to handle major breaking changes in state architecture.
     
 
 ### 📺 UI/UX: The 1963 Dashboard

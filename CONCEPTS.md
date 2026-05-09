@@ -44,7 +44,10 @@
 
 - **The Stack:** Electron (Shell) + Vue 3/Vite (Renderer) + TypeScript (Typing).
     
-- **Persistence:** The requirement to serialize the `state` object into `localStorage` so the TARDIS doesn't "reset" every time the window closes.
+- **Materialization Protocol (Persistence):** The console utilizes a multi-stage serialization protocol to preserve progress across loops and browser refreshes:
+    - **Stage 1: Serialization (The Save)**: The entire `state` object is converted to JSON and stored in `localStorage` every 30 seconds.
+    - **Stage 2: The Handshake (State Hydration)**: Upon boot, the system performs a "Schema Handshake." It retrieves the saved data and merges it with the `DEFAULT_STATE`, ensuring that any new skills or tasks added in recent updates are preserved even for players with old save files.
+    - **Stage 3: The Hard Reset**: A dedicated protocol to purge `localStorage` and force a timeline reload, restoring the TARDIS to its default factory settings for testing or new-game scenarios.
 
 - **Automation:** Implementation of the **Sequence Buffer** (Task Queue) and **Safety Stasis** (Auto-Pause) to refine the player experience.
 
