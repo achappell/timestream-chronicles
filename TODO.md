@@ -49,6 +49,12 @@
 
 - **[X] Stasis Button Fidelity:** Apply fixed-width CSS to the Stasis button to prevent header layout jitter when text changes.
 
+- **[ ] 1963 Design System (Two-Layer Architecture)**:
+    - [ ] **Layer 1 (Tokens)**: Create `timestream-renderer/src/assets/theme.css` with systematic variables.
+    - [ ] **Layer 2 (Patterns)**: Ensure `ProgressBar.vue` and other shared components consume Tokens rather than hardcoded colors.
+    - [ ] **Regeneration Architecture**: Wrap Variables in `[data-era="hartnell"]` for future-proofing.
+    - [ ] Link `theme.css` in `main.ts`.
+
 - **[ ] CRT Overlay:** Add a persistent `::after` pseudo-element on the main container with a linear-gradient for scanlines and a 2% opacity "flicker" animation.
     
 - **[ ] Aspect Ratio Lock:** Update `main.js` to use `mainWindow.setAspectRatio(4/3)` to force that classic TV box shape.

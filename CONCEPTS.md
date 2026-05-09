@@ -26,15 +26,11 @@
 ---
 
 ### 📺 Visual & Technical Architecture
+- **The 1963 Design System:** A robust "Two-Layer" CSS architecture designed for consistency and regeneration:
+    - **Layer 1: Design Tokens (The "What")**: Centralized in `theme.css`. These variables define the raw palette (Depth-Grayscale), Typography (monospace), and Kinetics (transitions). They are era-dependent and swap automatically via the **Regeneration Protocol**.
+    - **Layer 2: UI Patterns (The "How")**: Encapsulated in shared Vue components (e.g., `ProgressBar.vue`). These components define the "look and feel" (glow, scanlines, borders) while consuming the global Tokens.
 
-- **The 1963 Aesthetic:** A monochrome-dominant, high-contrast palette. To ensure depth and hierarchy, the console utilizes a "Depth-Grayscale" system:
-    - `--color-vortex-black`: `#050505` (Deepest shadows)
-    - `--color-panel-dark`: `#111111` (Inactive panels)
-    - `--color-panel-mid`: `#222222` (Borders and separators)
-    - `--color-text-dim`: `#888888` (Labels and background telemetry)
-    - `--color-text-bright`: `#eeeeee` (Standard readout)
-    - `--color-focus-white`: `#ffffff` (Active state and glow)
-    - `--color-accent-blue`: `#00aaff` (Temporal highlights - used sparingly)
+- **Regeneration Protocol (Theming):** The design system is engineered for multi-era evolution. By utilizing data-attributes (e.g., `[data-era="hartnell"]`) on the root container, the entire visual identity can be swapped instantaneously upon a narrative milestone (Doctor Regeneration). This allows for shifts from monochrome mechanical readouts to high-tech radar displays and eventually full-color digital telemetry.
 
 - **Adaptive Console Layout:** The TARDIS console prioritizes a "Viewport-First" display. The application aims to fit all critical telemetry (Stability, Timeline, Skills) within the primary view without scrolling. Scrolling is permitted only when content density (e.g., a long mission queue or log) exceeds the available vertical space. Metadata like the build version must be anchored to the viewport edge to remain visible regardless of content length.
 
