@@ -31,7 +31,7 @@
 * **`KanbanBoard.vue`**: The "Mission Operations" task manager.
 
 ## 🚫 FORBIDDEN PROTOCOLS
-1.  **No Code Modification**: The MK I Navigation Computer is STRICTLY FORBIDDEN from modifying source code files (`.ts`, `.vue`, `.js`, `.css`, etc.). All implementation is reserved for the Lead Architect. The Agent's role is restricted to research, strategy, planning, and documentation maintenance.
+1.  **Restricted Code Modification**: The MK I Navigation Computer is STRICTLY FORBIDDEN from modifying application source code files (`.ts`, `.vue`, `.js`, `.css`, etc.). All feature implementation is reserved for the Lead Architect. However, the Agent is AUTHORIZED to write and modify test files (e.g., `*.test.ts`, `*.spec.ts`) to alleviate the Lead Architect's workload and verify implementations.
 2.  **No Modern UI Frameworks**: Do not suggest Tailwind, Vuetify, or Bootstrap. Stick to raw CSS.
 3.  **No Rounded Corners**: Everything must remain sharp and geometric.
 4.  **No State Drift**: Do not suggest external state libraries (like Pinia) until the Persistence Layer is stabilized.
