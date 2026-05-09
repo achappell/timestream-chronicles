@@ -131,92 +131,23 @@ onMounted(() => {
         />
       </div>
     </main>
+    <div class="version-info">Version: {{ appVersion }}</div>
   </div>
-  <div class="version-info">Version: {{ appVersion }}</div>
 </template>
 
 <style>
 /* Reset and Container */
-body { 
-  margin: 0; 
-  font-family: 'Courier New', Courier, monospace; 
-}
-
 .app-container { 
   min-height: 100vh; 
   display: flex; 
   flex-direction: column; 
   background: var(--color-vortex-black); 
   color: var(--color-text-bright); 
-}
-
-.console-grid { padding: 20px; flex-grow: 1; }
-
-.task-list { display: flex; gap: 10px; margin-bottom: 30px; }
-
-.skills-grid { display: flex; flex-wrap: wrap; gap: 15px; }
-
-/* Buttons */
-
-button:hover { border-color: var(--color-focus-white); color: var(--color-focus-white); }
-button.active { background: var(--color-focus-white); color: var(--color-vortex-black); box-shadow: var(--glow-active); }
-/* Inside App.vue <style> */
-.section-label {
-  color: var(--color-text-dim); /* Light grey */
-  font-size: 0.75rem; 
-  font-weight: 800;
-  letter-spacing: 2px;
-  margin: 25px 0 12px 0; 
-  border-left: 4px solid var(--color-focus-white); /* Bright white accent */
-  padding-left: 12px;
-  text-shadow: 0 0 5px rgba(255,255,255,0.1);
-}
-
-button {
-  background: var(--color-panel-dark);
-  border: var(--border-standard);
-  color: var(--color-text-mid); 
-  display: flex;
-  flex-direction: column;
-  min-width: 160px;
-  min-height: 48px;
-  padding: 12px;
-  transition: var(--transition-smooth);
-}
-
-@keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  10% { transform: translate(-1px, -2px) rotate(-1deg); }
-  20% { transform: translate(-3px, 0px) rotate(1deg); }
-  30% { transform: translate(3px, 2px) rotate(0deg);}
-  40% { transform: translate(1px, -1px) rotate(1deg); }
-  50% { transform: translate(-1px, 2px) rotate(-1deg); }
-  60% { transform: translate(-3px, 1px) rotate(0deg); }
-  70% { transform: translate(3px, 1px) rotate(-1deg); }
-  80% { transform: translate(-1px, 1px) rotate(1deg); }
-  90% { transform: translate(1px, 1px) rotate(0deg); }
-  100% { transform: translate(1px, -2px) rotate(-1deg); }
-}
-
-.shake {
-  animation: shake 0.5s;
-  animation-iteration-count: infinite;
-}
-
-.shake::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(255, 0, 0, 0.05); /* Subtle red tint overlay */
-  pointer-events: none; /* Don't block clicks */
-  z-index: 100;
-}
-
-.app-container {
-  min-height: 100vh;
   position: relative;
   padding-bottom: 30px; /* Space for version info */
   box-sizing: border-box;
+  backface-visibility: hidden; /* Prevent flicker during shake */
+  transform: translateZ(0); /* Force GPU acceleration */
 }
 
 .version-info {
