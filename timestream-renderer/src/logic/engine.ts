@@ -31,7 +31,7 @@ export function tick(state: GameState, delta: number) {
       if (skill) {
         updateSkill(skill, activeTask.xpPerSec, delta);
       }
- 
+      
       // 2. Advance Cycle Progress
       activeTask.currentProgress += delta;
       if (activeTask.currentProgress >= activeTask.targetProgress) {
