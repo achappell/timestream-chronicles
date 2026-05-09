@@ -15,7 +15,7 @@ const state: GameState = reactive({
   collapseTimer: 0,
   timeInLoop: 0,
   activeTaskId: null,
-  currentEra: 'Hartnell', 
+  currentEra: 'hartnell', 
   skills: {
     scientificInquiry: { 
       id: 'scientificInquiry',
@@ -111,6 +111,7 @@ onMounted(() => {
           :class="{ 
             active: state.activeTaskId === task.id 
           }"
+        >
         <ProgressBar 
           :progress="task.currentProgress / task.targetProgress * 100" 
           variant="secondary"
@@ -138,11 +139,16 @@ onMounted(() => {
 /* Reset and Container */
 body { 
   margin: 0; 
+  font-family: 'Courier New', Courier, monospace; 
+}
+
+.app-container { 
+  min-height: 100vh; 
+  display: flex; 
+  flex-direction: column; 
   background: var(--color-vortex-black); 
   color: var(--color-text-bright); 
-  font-family: 'Courier New', Courier, monospace; }
-
-.app-container { min-height: 100vh; display: flex; flex-direction: column; }
+}
 
 .console-grid { padding: 20px; flex-grow: 1; }
 

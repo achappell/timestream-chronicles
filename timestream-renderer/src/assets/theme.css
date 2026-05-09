@@ -1,4 +1,11 @@
-[data-era="hartnell"] {
+/* GLOBAL FALLBACKS & RESET */
+:root {
+    --color-vortex-black: #050505;
+    --color-text-bright: #eeeeee;
+    --font-technical: 'Courier New', Courier, monospace;
+}
+
+[data-era="hartnell" i] {
     --color-vortex-black: #050505;
     --color-panel-dark: #111111;
     --color-panel-mid: #222222;
