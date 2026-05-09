@@ -90,6 +90,12 @@ export function reanchorTimeline(state: GameState) {
     skill.currentFocus = 0; // Reset Focus level
     skill.focusXP = 0; // Reset Focus XP
   }
+
+  // Reset all tasks' progress
+  for (const task of state.tasks) {
+    task.currentProgress = 0;
+    task.completions = 0;
+  }
 }
 
 export function calculateEntropyRate(state: GameState): number {

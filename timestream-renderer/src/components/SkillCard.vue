@@ -39,14 +39,14 @@ const masteryProgress = computed(() => Math.min(props.skill.permanentMastery * 5
         <span class="multiplier">× {{ totalMult }}</span>
         <div class="multiplier-tooltip">
           <div class="tooltip-header">Mastery Diagnostics</div>
-          <div class="tooltip-row">MST LVL: +{{ skill.permanentMastery }}</div>
+          <div class="tooltip-row">MST LVL: {{ skill.permanentMastery }}</div>
           <div class="tooltip-row">MST XP: {{ Math.floor(skill.masteryXP) }} / {{ masteryXpTotal }}</div>
-          <div class="tooltip-row">MST MULT: {{ mstMult .toFixed(2) }}</div>
+          <div class="tooltip-row">MST MULT: {{ mstMult .toFixed(2) }}x</div>
           <div class="tooltip-divider"></div>
           <div class="tooltip-header">Focus Diagnostics</div>
-          <div class="tooltip-row">FCS LVL: +{{ skill.currentFocus }}</div>
+          <div class="tooltip-row">FCS LVL: {{ skill.currentFocus }}</div>
           <div class="tooltip-row">FCS XP: {{ Math.floor(skill.focusXP) }} / {{ fcsXpTotal }}</div>
-          <div class="tooltip-row">FCS MULT: {{ fcsMult .toFixed(2) }}</div>
+          <div class="tooltip-row">FCS MULT: {{ fcsMult .toFixed(2) }}x</div>
           <div class="tooltip-divider"></div>
           <div class="tooltip-row total">TOTAL: {{ totalMult }}x</div>
         </div>
