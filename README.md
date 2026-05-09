@@ -1,5 +1,10 @@
 # 🌌 Timestream Chronicles
 
+![Build Status](https://github.com/achappell/timestream-chronicles/actions/workflows/deploy.yaml/badge.svg)
+![Code Coverage](https://img.shields.io/badge/Coverage-65%25-white?style=flat-square&logo=vitest&logoColor=black)
+![Version](https://img.shields.io/badge/Version-0.1.0--e909847-black?style=flat-square)
+![Aesthetic](https://img.shields.io/badge/Aesthetic-1963--Monochrome-lightgrey?style=flat-square)
+
 **Timestream Chronicles** is an "Increlution" style incremental game set in the *Doctor Who* universe, specifically focusing on the 1963 Hartnell Era. You play as the TARDIS Navigation Computer (MK I) assisting the Doctor in navigating complex timelines, surviving prehistoric Earth, and evading Dalek threats while maintaining the ship's stability.
 
 ## ⚙️ Core Mechanics

@@ -24,10 +24,11 @@
     - [X] Update `App.vue` mission cycles to use the shared `ProgressBar`.
 
 - **[X] High-Value Testing Protocol**:
-    - [ ] Install **Vitest** for engine unit testing.
+    - [X] Install **Vitest** for engine unit testing.
     - [X] Create `engine.test.ts` to validate Entropy Scaling, Safety Stasis, and XP Multipliers.
     - [X] Integrate test run into GitHub Actions build pipeline.
     - [X] Configure **Coverage Gutters** (lcov) for VSCode visual feedback.
+    - [ ] **Automated Telemetry**: Integrate a dynamic coverage badge into the README (e.g., via Codecov or a GitHub Action summary).
 
 - **[ ] The Inventory Protocol:**
     - Add `inventory: Record<string, number>` to the state.
