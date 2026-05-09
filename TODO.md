@@ -50,8 +50,9 @@
 
 - **[X] The "Hard Reset" Protocol:** Add a hidden or small button to clear the save—essential for testing the "New Game" flow.
 
-- **[ ] Save Key Versioning:** Implement a versioning strategy for the `SAVE_KEY` (e.g., `v1` to `v2`) to handle major breaking changes in state architecture.
-    
+- **[X] System Control Menu:** Implement a dropdown menu for manual save, export (base64 string), and import.
+
+- **[ ] Save Key Versioning:** Implement a versioning strategy for the `SAVE_KEY` (e.g., `v1` to `v2`) to handle major breaking changes in state architecture.    
 
 ### 📺 UI/UX: The 1963 Dashboard
 

@@ -12,6 +12,10 @@ html, body {
     padding: 0;
 }
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 [data-era="hartnell" i] {
     --color-vortex-black: #050505;
     --color-panel-dark: #111111;

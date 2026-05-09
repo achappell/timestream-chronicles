@@ -10,6 +10,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'pause-toggle'): void;
+  (e: 'menu-toggle'): void;
 }>();
 
 const formattedTime = computed(() => {
@@ -41,6 +42,7 @@ const formattedTime = computed(() => {
       >
       {{ isPaused ? 'RESUME FLOW' : 'STASIS' }}
     </button>
+    <button class="stasis-btn" @click="emit('menu-toggle')">SYSTEM</button>
   </header>
 </template>
 
@@ -83,7 +85,7 @@ const formattedTime = computed(() => {
   font-size: 0.75rem; 
   color: var(--color-text-mid); /* Much more readable */
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
 }
 .value { 
   font-size: 1.2rem; 

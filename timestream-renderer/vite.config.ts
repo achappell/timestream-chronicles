@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import { execSync } from 'child_process';
 
@@ -13,6 +13,7 @@ export default defineConfig({
     '__APP_VERSION__': JSON.stringify(`${process.env.npm_package_version}-${gitHash}`),
   },
   test: {
+    environment: 'happy-dom',
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'lcov'],

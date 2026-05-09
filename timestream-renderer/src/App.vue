@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { reactive, onMounted } from 'vue';
+import { reactive, onMounted, ref } from 'vue';
 import GameHeader from './components/GameHeader.vue';
 import SkillCard from './components/SkillCard.vue';
 import { calculateEntropyRate, tick as engineTick, reanchorTimeline } from './logic/engine';
+import { loadGame, saveGame, clearSave } from './logic/persistence';
 import type { GameState } from './types';
 import ProgressBar from './components/ProgressBar.vue';
+import SystemMenu from './components/SystemMenu.vue';
+import { importSave, exportSave } from './logic/persistence';
 
 const appVersion = __APP_VERSION__; // Injected at build time
 
-const state: GameState = reactive({
+const DEFAULT_STATE: GameState = {
   stability: 100,
   maxStability: 100,
   isPaused: false,
@@ -62,7 +65,14 @@ const state: GameState = reactive({
       unlocked: true
     }
   ]
-});
+};
+
+const state: GameState = reactive(loadGame(DEFAULT_STATE));
+
+// TARDIS Auto-Save Protocol: Every 30 seconds
+setInterval(() => {
+  saveGame(state);
+}, 30000);
 
 let lastTick = performance.now();
 const tick = () => {
@@ -81,6 +91,39 @@ const handleReanchor = () => {
 onMounted(() => {
   requestAnimationFrame(tick);
 });
+
+const isMenuOpen = ref(false);
+
+const handleManualSave = () => saveGame(state);
+const handleHardReset = () => clearSave();
+const handleImport = (str: string) => {
+  const newState = importSave(str);
+  if (newState) {
+    state.stability = newState.stability;
+    state.skills = newState.skills;
+    state.tasks = newState.tasks;
+    state.timeInLoop = newState.timeInLoop;
+    
+    saveGame(state); // Immediately save the imported state
+    alert('TIMELINE IMPORTED SUCCESSFULLY!');
+    isMenuOpen.value = false; // Close menu after import
+  } else {
+    alert('FAILED TO IMPORT TIMELINE');
+  }
+}
+
+const handleExport = () => {
+  const saveString = exportSave(state);
+  console.log('Exported Save String:', saveString);
+  navigator.clipboard.writeText(saveString)
+  .then(() => {
+    alert('TIMELINE STRING (BASE64) COPIED TO CLIPBOARD:\n\n' + saveString);
+  })
+  .catch(() => {
+    alert('FAILED TO COPY TIMELINE STRING TO CLIPBOARD');
+  });
+};
+
 </script>
 
 <template>
@@ -92,7 +135,13 @@ onMounted(() => {
       :timeInLoop="state.timeInLoop"
       :entropyRate="calculateEntropyRate(state)"
       @pause-toggle="state.isPaused = !state.isPaused"
+      @menu-toggle="isMenuOpen = !isMenuOpen"
     />
+    <SystemMenu v-if="isMenuOpen" 
+      @save="handleManualSave" 
+      @hard-reset="handleHardReset" 
+      @import-save="handleImport" 
+      @export-save="handleExport"/>
     <button
       v-if="state.stability <= 0"
       @click="handleReanchor"
@@ -131,7 +180,10 @@ onMounted(() => {
         />
       </div>
     </main>
-    <div class="version-info">Version: {{ appVersion }}</div>
+    <div class="version-info">
+      <button class="reset-btn" @click="clearSave">HARD RESET</button>
+      Version: {{ appVersion }}
+    </div>
   </div>
 </template>
 
@@ -183,6 +235,23 @@ button {
   transition: var(--transition-smooth);
 }
 
+.reset-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-dim);
+  font-size: 0.65rem;
+  cursor: pointer;
+  margin-right: 15px;
+  padding: 0;
+  min-width: auto;
+  min-height: auto;
+}
+
+.reset-btn:hover {
+  color: #ff0000; /* Warning red */
+  text-decoration: underline;
+}
+
 @keyframes shake {
   0% { transform: translate(1px, 1px) rotate(0deg); }
   10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -217,6 +286,8 @@ button {
   right: 15px;
   font-size: 0.75rem;
   color: var(--color-text-dim); 
+  display: flex;
+  align-items: center;
 }
 
 </style>
