@@ -30,13 +30,13 @@ describe('SkillCard Multiplier UI', () => {
     const tooltip = wrapper.find('.multiplier-tooltip');
     
     // Check Mastery Section
-    expect(tooltip.text()).toContain('MST LVL: +2');
-    expect(tooltip.text()).toContain('MST MULT: 1.20');
+    expect(tooltip.text()).toContain('MST LVL: 2');
+    expect(tooltip.text()).toContain('MST MULT: 1.20x');
     
     // Check Focus Section
-    expect(tooltip.text()).toContain('FCS LVL: +4');
+    expect(tooltip.text()).toContain('FCS LVL: 4');
     expect(tooltip.text()).toContain('FCS XP: 150 / 500');
-    expect(tooltip.text()).toContain('FCS MULT: 1.20');
+    expect(tooltip.text()).toContain('FCS MULT: 1.20x');
     
     // Check Total
     expect(tooltip.find('.total').text()).toContain('TOTAL: 1.44x');

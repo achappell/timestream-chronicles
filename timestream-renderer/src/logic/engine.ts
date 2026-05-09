@@ -33,7 +33,7 @@ export function tick(state: GameState, delta: number) {
       }
 
       // 2. Advance Cycle Progress
-      const multiplier = (1 + skill.permanentMastery * 0.1) * (1 * skill.currentFocus * 0.05); // Mastery and Focus can speed up progress
+      const multiplier = (1 + skill.permanentMastery * 0.1) * (1 + skill.currentFocus * 0.05); // Mastery and Focus can speed up progress
       activeTask.currentProgress += delta * multiplier;
       if (activeTask.currentProgress >= activeTask.targetProgress) {
         activeTask.currentProgress = 0;

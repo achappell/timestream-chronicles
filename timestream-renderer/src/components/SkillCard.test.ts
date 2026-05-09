@@ -27,8 +27,8 @@ describe('SkillCard.vue', () => {
       }
     });
     
-    // Multiplier = 1 + (2 * 0.1) = 1.2
-    expect(wrapper.find('.multiplier').text()).toBe('× 1.20');
+    // Multiplier = (1 + 2 * 0.1) * (1 + 1 * 0.05) = 1.2 * 1.05 = 1.26
+    expect(wrapper.find('.multiplier').text()).toBe('× 1.26');
   });
 
   it('passes progress to ProgressBar components correctly', () => {
