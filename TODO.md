@@ -116,4 +116,4 @@
 - **[ ] [Architecture] Remove Redundant Code:** `SkillBar.vue` appears to be unused and should be removed.
 - **[ ] [Architecture] Electron Shell Production Readiness:** Electron `main.js` is hardcoded to `http://localhost:5173`. Needs logic to load built assets for production.
 - **[ ] [Architecture] Electron IPC Bridge:** Missing Inter-Process Communication (IPC) bridge in Electron for OS interactions (e.g., file saves).
-- **[ ] [Testing] Component Testing:** Implement component-level testing for the Vue UI (currently only core logic is tested).
+- **[X] [Testing] Component Testing:** Implement component-level testing for the Vue UI (currently only core logic is tested).
