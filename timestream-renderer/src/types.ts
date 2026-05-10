@@ -12,6 +12,17 @@ export interface Skill {
   focusXP: number;          // XP toward the next focus level
 }
 
+export interface TaskReward {
+  itemId: string;
+  amount: number;
+  chance: number;
+}
+
+export interface UnlockRequirements {
+  skillLevels?: Record<string, number>; 
+  taskCompletions?: Record<string, number>;
+}
+
 export interface GameState {
   stability: number; 
   maxStability: number; 
@@ -22,6 +33,7 @@ export interface GameState {
   currentEra: string;
   skills: Record<string, Skill>;
   tasks: Task[];
+  inventory: Record<string, number>;
 }
 
 export interface Task {
@@ -35,4 +47,7 @@ export interface Task {
   targetProgress: number; // define what "completion" means (e.g., reach Focus level 5)
   completions: number; // track how many times this task has been completed
   maxCompletions: number; // limit how many times this task can be completed
+  entropyWeight: number; // How much this task contributes to entropy decay
+  unlockRequirements?: UnlockRequirements; // Optional requirements for unlocking the task
+  rewards?: TaskReward[]; // Optional rewards for completing the task
 }

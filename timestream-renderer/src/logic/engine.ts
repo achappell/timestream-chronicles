@@ -1,4 +1,4 @@
-import type { GameState, Skill } from "../types";
+import type { GameState, Skill, Task } from "../types";
 
 const BASE_STABILITY_DECAY = 0.5; // Base stability decay per second when a task is active
 const SCALING_FACTOR = 0.1; // Scaling factor for XP gain to prevent runaway growth
@@ -37,6 +37,15 @@ export function tick(state: GameState, delta: number) {
       if (activeTask.currentProgress >= activeTask.targetProgress) {
         activeTask.currentProgress = 0;
         activeTask.completions++;
+
+        if (activeTask.rewards) {
+          for (const reward of activeTask.rewards) {
+            if (Math.random() < reward.chance) {
+              const currentAmount = state.inventory[reward.itemId] || 0;
+              state.inventory[reward.itemId] = currentAmount + reward.amount;
+            }
+          }
+        }
       }
 
       // 3. Mission Completion
@@ -99,6 +108,53 @@ export function reanchorTimeline(state: GameState) {
 
 export function calculateEntropyRate(state: GameState): number {
   if (!state.activeTaskId) return 0; // No active task, no entropy gain
+
+  const activeTask = state.tasks.find(task => task.id === state.activeTaskId);
+
+  const weight = activeTask ? activeTask.entropyWeight : 1; // Default weight is 1 if not specified
+
   const scalingMultiplier = 1 + (state.timeInLoop / 60) * SCALING_FACTOR; // Increase decay over time
-  return BASE_STABILITY_DECAY * scalingMultiplier; // Base decay scaled by time in loop
+  return BASE_STABILITY_DECAY * scalingMultiplier * weight; // Base decay scaled by time in loop
+}
+
+export function consumeItem(state: GameState, itemId: string): boolean {
+  const currentAmount = state.inventory[itemId] || 0;
+  if (currentAmount <= 0) return false;
+  
+  const restorationValues: Record<string, number> = {
+    rawEnergy: 15, // Restores energy
+  };
+
+  const amount = restorationValues[itemId] || 0;
+
+  state.inventory[itemId] = currentAmount - 1;
+  state.stability = Math.min(state.stability + amount, state.maxStability);
+  return true;
+}
+
+export function isTaskUnlocked(state: GameState, task: Task): boolean {
+  if (task.unlocked) return true; // If already unlocked, return true
+
+  if (!task.unlockRequirements) return false; // No requirements means it can't be unlocked
+
+  const reqs = task.unlockRequirements;
+
+  if (reqs.skillLevels) {
+    for (const [skillId, level] of Object.entries(reqs.skillLevels)) {
+      if (state.skills[skillId]?.permanentMastery < level) {
+        return false;
+      }
+    }
+  }
+
+  if (reqs.taskCompletions) {
+    for (const [taskId, count] of Object.entries(reqs.taskCompletions)) {
+      const task = state.tasks.find(t => t.id === taskId);
+      if (!task || task.completions < count) {
+        return false;
+      }
+    }
+  }
+
+  return true;
 }

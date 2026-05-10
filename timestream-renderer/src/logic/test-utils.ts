@@ -25,6 +25,7 @@ export function createMockTask(overrides: Partial<Task> = {}): Task {
     targetProgress: 10,
     completions: 0,
     maxCompletions: 5,
+    entropyWeight: 1,
     ...overrides,
   };
 }
@@ -42,6 +43,7 @@ export function createMockState(overrides: Partial<GameState> = {}): GameState {
       "test-skill": createMockSkill(),
     },
     tasks: [createMockTask()],
+    inventory: {},
     ...overrides,
   };
 }

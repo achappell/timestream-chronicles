@@ -2,7 +2,7 @@
 import { reactive, onMounted, ref } from 'vue';
 import GameHeader from './components/GameHeader.vue';
 import SkillCard from './components/SkillCard.vue';
-import { calculateEntropyRate, tick as engineTick, reanchorTimeline } from './logic/engine';
+import { calculateEntropyRate, tick as engineTick, reanchorTimeline, consumeItem, isTaskUnlocked } from './logic/engine';
 import { loadGame, saveGame, clearSave } from './logic/persistence';
 import type { GameState } from './types';
 import ProgressBar from './components/ProgressBar.vue';
@@ -24,7 +24,7 @@ const DEFAULT_STATE: GameState = {
       id: 'scientificInquiry',
       name: 'Scientific Inquiry', 
       description: 'The ability to analyze and understand the world around you, uncovering hidden knowledge and insights.',
-      permanentMastery: 5, 
+      permanentMastery: 0, 
       currentFocus: 0, 
       focusXP: 0,
       masteryXP: 0 
@@ -50,7 +50,11 @@ const DEFAULT_STATE: GameState = {
     targetProgress: 100, 
     completions: 0,
     maxCompletions: 5,
-    unlocked: true 
+    unlocked: true,
+    entropyWeight: 0.8,
+    rewards: [
+      { itemId: 'rawEnergy', amount: 1, chance: 1 } 
+    ]
   },
   { 
     id: 'analyze', 
@@ -62,9 +66,11 @@ const DEFAULT_STATE: GameState = {
     targetProgress: 100, 
     completions: 0,
     maxCompletions: 5,
-    unlocked: true
+    unlocked: true,
+    entropyWeight: 1.2,
   }
-  ]
+  ],
+  inventory: { }
 };
 
 const state: GameState = reactive(loadGame(DEFAULT_STATE));
@@ -151,20 +157,38 @@ const handleExport = () => {
     <main class="console-grid">
       <div class="section-label">MISSION PROTOCOLS</div>
       <div class="task-list">
-        <button 
-          v-for="task in state.tasks" 
-          :key="task.id"
-          @click="state.activeTaskId = task.id"
-          :class="{ 
-            active: state.activeTaskId === task.id 
-          }">
-          <ProgressBar 
-            :progress="task.currentProgress / task.targetProgress * 100" 
-            variant="secondary"
-            :label="task.name"
-            :count="`${task.completions}/${task.maxCompletions}`">
-          </ProgressBar>
-        </button>
+        <template v-for="task in state.tasks" :key="task.id">
+          <button 
+            v-if="isTaskUnlocked(state, task)"
+            @click="state.activeTaskId = task.id"
+            :class="{ 
+              active: state.activeTaskId === task.id 
+            }">
+            <ProgressBar 
+              :progress="(task.currentProgress / task.targetProgress) * 100" 
+              variant="secondary"
+              :label="task.name"
+              :count="`${task.completions}/${task.maxCompletions}`">
+            </ProgressBar>
+          </button>
+        </template>
+      </div>
+
+      <div class="section-label">SYSTEM SURPLUS</div>
+      <div class="inventory-grid">
+        <div v-if="Object.keys(state.inventory).length === 0" class="empty-inventory">
+          NO ITEMS RECOVERED
+        </div>
+        <template v-for="(amount, itemId) in state.inventory" :key="itemId">
+          <button 
+            @click="consumeItem(state, itemId)"
+            class="inventory-btn"
+            v-show="amount > 0"
+          >
+            <span class="item-name">PURGE {{ itemId.toUpperCase() }}</span>
+            <span class="item-count">QTY: {{ amount }}</span>
+          </button>
+        </template>
       </div>
 
       <div class="section-label">COGNITIVE MASTERY</div>
@@ -258,6 +282,36 @@ button {
 .reset-btn:hover {
   color: #ff0000; /* Warning red */
   text-decoration: underline;
+}
+
+.inventory-grid {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.inventory-btn {
+  background: var(--color-panel-mid);
+  border: 1px solid var(--color-accent-blue);
+  color: var(--color-accent-blue);
+}
+
+.inventory-btn:hover {
+  background: var(--color-accent-blue);
+  color: var(--color-vortex-black); 
+}
+
+.empty-inventory {
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  font-style: italic;
+  padding: 10px;
+}
+
+.item-count {
+  font-size: 0.7rem;
+  opacity: 0.8;
 }
 
 @keyframes shake {

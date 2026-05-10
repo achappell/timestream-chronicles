@@ -29,6 +29,7 @@ export function loadGame(defaultState: GameState): GameState {
     return {
       ...defaultState,
       ...parsed,
+      inventory: { ...defaultState.inventory, ...parsed.inventory }, // Merge inventory
       // Ensure skills map is merged correctly
       skills: { ...defaultState.skills, ...parsed.skills },
       // Ensure task progress is merged by ID
@@ -47,6 +48,7 @@ export function hydrateState(defaultState: GameState, parsed: any): GameState {
   return {
     ...defaultState,
     ...parsed,
+    inventory: { ...defaultState.inventory, ...parsed.inventory },
     // Ensure skills map is merged correctly
     skills: { ...defaultState.skills, ...parsed.skills },
     // Ensure task progress is merged by ID
