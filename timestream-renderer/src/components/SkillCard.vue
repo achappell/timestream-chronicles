@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import ProgressBar from './ProgressBar.vue';
+import BaseTooltip from './BaseTooltip.vue';
 
 // 1. Define the props
 const props = defineProps<{
@@ -36,43 +37,52 @@ const masteryProgress = computed(() => {
     <div class="card-top">
       <span class="skill-icon">⌬</span>
       <span class="skill-name">{{ skill.name }}</span>
+      
       <div class="multiplier-container" tabindex="0">
         <span class="multiplier">× {{ totalMult }}</span>
-        <div class="multiplier-tooltip">
+        
+        <BaseTooltip class="multiplier-readout" width="180px">
           <div class="tooltip-header">Mastery Diagnostics</div>
           <div class="tooltip-row">MST LVL: {{ skill.permanentMastery }}</div>
           <div class="tooltip-row">MST XP: {{ Math.floor(skill.masteryXP) }} / {{ masteryXpTotal }}</div>
-          <div class="tooltip-row">MST MULT: {{ mstMult .toFixed(2) }}x</div>
+          <div class="tooltip-row">MST MULT: {{ mstMult.toFixed(2) }}x</div>
+          
           <div class="tooltip-divider"></div>
+          
           <div class="tooltip-header">Focus Diagnostics</div>
           <div class="tooltip-row">FCS LVL: {{ skill.currentFocus }}</div>
           <div class="tooltip-row">FCS XP: {{ Math.floor(skill.focusXP) }} / {{ fcsXpTotal }}</div>
-          <div class="tooltip-row">FCS MULT: {{ fcsMult .toFixed(2) }}x</div>
+          <div class="tooltip-row">FCS MULT: {{ fcsMult.toFixed(2) }}x</div>
+          
           <div class="tooltip-divider"></div>
-          <div class="tooltip-row total">TOTAL: {{ totalMult }}x</div>
-        </div>
+          
+          <div class="tooltip-row" style="color: var(--color-text-bright); font-weight: bold;">
+            TOTAL: {{ totalMult }}x
+          </div>
+        </BaseTooltip>
       </div>
     </div>
+    
     <div class="bars-container">
-    <ProgressBar 
-      :progress="masteryProgress" 
-      label="MST" 
-      variant="secondary"
-    />
-    <ProgressBar 
-      :progress="focusProgress" 
-      label="FCS" 
-      variant="primary"
-    />
+      <ProgressBar 
+        :progress="masteryProgress" 
+        label="MST" 
+        variant="secondary"
+      />
+      <ProgressBar 
+        :progress="focusProgress" 
+        label="FCS" 
+        variant="primary"
+      />
     </div>
   </div>
 </template>
 
 <style scoped>
 .skill-card {
-  background: var(--color-panel-dark); /* Slightly lighter background */
+  background: var(--color-panel-dark);
   border: var(--border-standard);
-  width: 100%; /* Bit more width for text breathing room */
+  width: 100%;
   max-width: 300px;
   padding: var(--panel-padding);
   display: flex;
@@ -97,6 +107,13 @@ const masteryProgress = computed(() => {
   text-transform: uppercase;
 }
 
+.multiplier-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: help;
+}
+
 .multiplier { 
   background: var(--color-focus-white); 
   color: var(--color-vortex-black);
@@ -109,56 +126,25 @@ const masteryProgress = computed(() => {
   width: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--color-vortex-black); /* Deep black for the "Empty" part */
+  background: var(--color-vortex-black);
   border: var(--border-standard);
   overflow: hidden;
 }
 
-.multiplier-container {
-  position: relative;
-  cursor: help;
+/* Tooltip Trigger Logic */
+.multiplier-readout {
+  display: none !important;
 }
 
-.multiplier-tooltip {
-  position: absolute;
-  display: none;
-  top: 100%;
+/* For SkillCard, we want it on the right to stay inside the card footprint */
+.multiplier-readout :deep(.base-tooltip) {
+  left: auto;
   right: 0;
-  z-index: 1001;
-  background: var(--color-vortex-black);
-  border: var(--border-active);
-  padding: 8px;
-  font-family: var(--font-technical);
-  min-width: 160px;
-  box-shadow: var(--shadow-elevation);
-  margin-top: 8px;
 }
 
-.multiplier-container:hover .multiplier-tooltip,
-.multiplier-container:focus .multiplier-tooltip,
-.multiplier-container:focus-within .multiplier-tooltip {
-  display: block;
-}
-
-.tooltip-header {
-  font-size: 0.7rem;
-  color: var(--color-accent-blue);
-  margin-bottom: 4px;
-  text-transform: uppercase;
-}
-
-.tooltip-row {
-  font-size: 0.75rem;
-  color: var(--color-text-mid);
-}
-
-.tooltip-divider {
-  border-top: var(--border-subtle);
-  margin: 4px 0;
-}
-
-.tooltip-row.total {
-  color: var(--color-text-bright);
-  font-weight: bold;
+.multiplier-container:hover .multiplier-readout,
+.multiplier-container:focus .multiplier-readout,
+.multiplier-container:focus-within .multiplier-readout {
+  display: block !important;
 }
 </style>

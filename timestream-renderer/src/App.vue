@@ -31,7 +31,6 @@ const DEFAULT_STATE: GameState = {
 };
 
 const state: GameState = reactive(loadGame(DEFAULT_STATE));
-const inspectedTask = ref<Task | null>(null);
 
 // TARDIS Auto-Save Protocol: Every 30 seconds
 setInterval(() => {
@@ -116,24 +115,28 @@ const handleExport = () => {
       <div class="section-label">MISSION PROTOCOLS</div>
       <div class="task-list">
         <template v-for="task in state.tasks" :key="task.id">
-          <button 
-            class="task-action-btn"
-            v-if="isTaskUnlocked(state, task)"
-            @click="state.activeTaskId = task.id"
-            :class="{ 
-              active: state.activeTaskId === task.id 
-            }">
-            <ProgressBar 
-              :progress="(task.currentProgress / task.targetProgress) * 100" 
-              variant="secondary"
-              :label="task.name"
-              :count="task.maxCompletions > 0 ? `${task.completions}/${task.maxCompletions}` : ''">
-            </ProgressBar>
-            <button class="info-btn" @click.stop="inspectedTask = task" aria-label="Task Details"
-                    v-if="isTaskUnlocked(state, task)">
-              ?
+          <div v-if="isTaskUnlocked(state, task)" class="task-container">
+            <button 
+              class="task-action-btn"
+              @click="state.activeTaskId = task.id"
+              :class="{ 
+                active: state.activeTaskId === task.id 
+              }">
+              <ProgressBar 
+                :progress="(task.currentProgress / task.targetProgress) * 100" 
+                variant="secondary"
+                :label="task.name"
+                :count="task.maxCompletions > 0 ? `${task.completions}/${task.maxCompletions}` : ''" />
             </button>
-          </button>
+
+            <!-- Tooltip is now anchored to the WHOLE button container -->
+            <div class="info-btn-container" tabindex="0">
+              <span class="info-icon">?</span>
+            </div>
+            
+            <!-- Tooltip is a sibling to the icon, but anchored to task-container -->
+            <TaskTooltip :task="task" class="task-telemetry-readout" />
+          </div>
         </template>
       </div>
 
@@ -168,11 +171,6 @@ const handleExport = () => {
       Version: {{ appVersion }}
     </div>
     <div class="crt-overlay"></div>
-    <TaskTooltip
-    v-if="inspectedTask"
-    :task="inspectedTask"
-    @close="inspectedTask = null"
-    />
   </div>
 </template>
 
@@ -367,28 +365,39 @@ button {
 .task-container {
   position: relative;
   display: flex;
+  min-width: 176px;
 }
 
-.info-btn {
-  width: 24px; height: 24px;
-  min-width: 24px; min-height: 24px;
+.task-action-btn {
+  flex-grow: 1;
+}
+
+.info-btn-container {
+  position: absolute;
+  top: var(--space-xs);
+  right: var(--space-xs);
+  width: 20px;
+  height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   background: var(--color-vortex-black);
   border: 1px solid var(--color-text-dim);
   color: var(--color-text-dim);
-  font-size: 12px;
-  cursor: pointer;
-  padding: 0;
-  z-index: 10;
-  top: var(--space-xs);
-  right: var(--space-xs);
+  font-size: 10px;
+  cursor: help;
+  z-index: 20;
 }
 
-.info-btn:hover {
-  color: var(--color-focus-white);
-  border-color: var(--color-focus-white);
+.task-telemetry-readout {
+  display: none !important;
+}
+
+/* Show tooltip when EITHER the icon container is focused OR the whole task is hovered */
+.task-container:hover .task-telemetry-readout,
+.info-btn-container:focus + .task-telemetry-readout,
+.info-btn-container:focus-within + .task-telemetry-readout {
+  display: block !important;
 }
 
 @media (max-width: 600px) {
