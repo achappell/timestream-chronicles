@@ -39,6 +39,15 @@ export function tick(state: GameState, delta: number) {
 
       // 3. Mission Completion
       if (activeTask.currentProgress >= activeTask.targetProgress) {
+        // --- INVENTORY USE LOGIC ---
+        if (activeTask.requiredItemId) {
+          const success = consumeItem(state, activeTask.requiredItemId);
+          if (!success) {
+            state.activeTaskId = null;
+            return;
+          }
+        }
+
         activeTask.currentProgress = 0;
         activeTask.completions++;
 
@@ -114,8 +123,8 @@ export function reanchorTimeline(state: GameState) {
   state.isPaused = false;
   state.collapseTimer = 0;
   state.timeInLoop = 0; 
-  // timelineAdvanced removed (Architectural choice: use eraCompletions instead)
-
+  state.inventory = {};
+  
   // Reset all skills' Focus
   for (const skillKey in state.skills) {
     const skill = state.skills[skillKey];
@@ -160,7 +169,9 @@ export function consumeItem(state: GameState, itemId: string): boolean {
     return true;
   }
 
-  return false;
+  state.inventory[itemId] = currentAmount - 1;
+
+  return true;
 }
 
 export function isTaskUnlocked(state: GameState, task: Task): boolean {

@@ -88,6 +88,44 @@ describe("Temporal Engine Heartbeat", () => {
       expect(state.activeTaskId).toBe(null); // Reanchored
       expect(state.timeInLoop).toBe(0); // Reanchored
     });
+
+    it("should consume required items upon task completion", () => {
+      const task = createMockTask({ 
+        id: 'craft-task',
+        currentProgress: 9, 
+        targetProgress: 10, 
+        requiredItemId: 'scrap'
+      });
+      const state = createMockState({ 
+        activeTaskId: task.id, 
+        tasks: [task],
+        inventory: { 'scrap': 5 } 
+      });
+      
+      tick(state, 1.0); // Complete the task
+      
+      expect(state.inventory['scrap']).toBe(4);
+      expect(state.tasks[0].completions).toBe(1);
+    });
+
+    it("should deactivate task if required item is missing upon completion", () => {
+      const task = createMockTask({ 
+        id: 'craft-task',
+        currentProgress: 9, 
+        targetProgress: 10, 
+        requiredItemId: 'scrap'
+      });
+      const state = createMockState({ 
+        activeTaskId: task.id, 
+        tasks: [task],
+        inventory: { 'scrap': 0 } 
+      });
+      
+      tick(state, 1.0); // Attempt to complete
+      
+      expect(state.activeTaskId).toBe(null);
+      expect(state.tasks[0].completions).toBe(0); // Should not have completed
+    });
   });
 
   describe("Task Unlock Logic", () => {
