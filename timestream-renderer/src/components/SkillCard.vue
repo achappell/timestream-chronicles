@@ -14,20 +14,21 @@ const props = defineProps<{
   }
 }>();
 
-const mstMult = computed(() => 1 + props.skill.permanentMastery * 0.1);
-const fcsMult = computed(() => 1 + props.skill.currentFocus * 0.05);
+// --- COMPOUNDING MULTIPLIERS (1.01^MST and 1.05^FCS) ---
+const mstMult = computed(() => Math.pow(1.01, props.skill.permanentMastery));
+const fcsMult = computed(() => Math.pow(1.05, props.skill.currentFocus));
 const totalMult = computed(() => (mstMult.value * fcsMult.value).toFixed(2));
 
 const fcsXpTotal = computed(() => (props.skill.currentFocus + 1) * 100);
 const masteryXpTotal = computed(() => (props.skill.permanentMastery + 1) * 100);
 
 const focusProgress = computed(() => {
-  const xpNeeded = (props.skill.currentFocus + 1) * 100; // XP needed for next focus level
+  const xpNeeded = (props.skill.currentFocus + 1) * 100;
   return (props.skill.focusXP / xpNeeded) * 100;
 });
 
 const masteryProgress = computed(() => {
-  const xpNeeded = (props.skill.permanentMastery + 1) * 100; // XP needed for next mastery level
+  const xpNeeded = (props.skill.permanentMastery + 1) * 100;
   return (props.skill.masteryXP / xpNeeded) * 100;
 });
 </script>

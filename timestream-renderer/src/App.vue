@@ -183,10 +183,10 @@ const handleExport = () => {
   background: var(--color-vortex-black); 
   color: var(--color-text-bright); 
   position: relative;
-  padding-bottom: 40px; 
   box-sizing: border-box;
   backface-visibility: hidden; 
   transform: translateZ(0); 
+  overflow-x: hidden; /* Prevent horizontal jitter */
 }
 
 .console-grid { 
@@ -338,6 +338,7 @@ button {
   z-index: 999;
   pointer-events: none;
   background-size: 100% 4px, 100% 100%;
+  overflow: hidden; /* CLIP THE SCANLINES! */
 }
 
 .crt-overlay::before {
@@ -345,7 +346,7 @@ button {
   position: absolute;
   top: 0; left: 0;
   width: 100%;
-  height: 200%;
+  height: 200%; /* Height is for rolling animation */
   background: linear-gradient(rgba(255, 255, 255, 0.08), transparent 25%, transparent);
   pointer-events: none;
   animation: scanline-roll 12s linear infinite;

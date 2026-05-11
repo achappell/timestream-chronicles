@@ -6,8 +6,8 @@
 
 ## ⚙️ CORE MECHANICS (The Source of Truth)
 * **Timeline Stability**: The sole survival metric. 
-    * **Base Decay**: Erodes faster over time (Scaling Decay).
-    * **Entropy Weight**: Active tasks accelerate decay.
+    * **Base Decay:** Erodes faster over time (Scaling Decay: +20% compounding per minute).
+    * **Entropy Weight:** Active tasks accelerate decay.
     * **Stabilization**: Items or "Narrative Anchors" that restore stability or slow decay. Major stabilization buffs are unlocked through story milestones/reincarnations.
 * **Inventory**: A collection of components and consumables discovered during tasks.
 * **Temporal Re-Anchoring**: The loop reset. Stability is restored, Focus/Inventory is wiped (unless "Secured"), Mastery persists.

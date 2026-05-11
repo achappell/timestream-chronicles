@@ -1,7 +1,7 @@
 import type { GameState, Skill, Task } from "../types";
 
 const BASE_STABILITY_DECAY = 0.5; // Base stability decay per second when a task is active
-const SCALING_FACTOR = 0.1; // Scaling factor for XP gain to prevent runaway growth
+const ENTROPY_SCALING_RATE = 1.20; // 20% increase per minute, compounding
 
 export function tick(state: GameState, delta: number) {
   if (!state.activeTaskId && !state.isPaused) {
@@ -18,64 +18,56 @@ export function tick(state: GameState, delta: number) {
   }
 
   if (state.activeTaskId && state.stability > 0) {
-    state.stability -= calculateEntropyRate(state) * delta; // Decay stability based on active task and time in loop
-  }
-
-  if (state.activeTaskId) {
     const activeTask = state.tasks.find(task => task.id === state.activeTaskId);
+    
     if (activeTask) {
+      // 1. Process Entropy (Stability Decay)
+      const rate = calculateEntropyRate(state);
+      state.stability -= rate * delta;
+
+      // 2. Process Task Progress
       const skill = state.skills[activeTask.skillId];
-
-      if (activeTask.requiredItemId) {
-        const count = state.inventory[activeTask.requiredItemId] || 0;
-        if (count === 0) {
-          state.activeTaskId = null;
-          return;
-        }
-      }
-
-      // 1. Continuous XP Award (Updates Skill Bars smoothly)
       if (skill) {
+        // --- COMPOUNDING MULTIPLIERS (1.01^MST and 1.05^FCS) ---
+        const multiplier = Math.pow(1.01, skill.permanentMastery) * Math.pow(1.05, skill.currentFocus);
+        
+        activeTask.currentProgress += multiplier * delta;
+
+        // Skill Gain logic
         updateSkill(skill, activeTask.xpPerSec, delta);
       }
 
-      // 2. Advance Cycle Progress
-      const multiplier = (1 + skill.permanentMastery * 0.1) * (1 + skill.currentFocus * 0.05); // Mastery and Focus can speed up progress
-      activeTask.currentProgress += delta * multiplier;
+      // 3. Mission Completion
       if (activeTask.currentProgress >= activeTask.targetProgress) {
         activeTask.currentProgress = 0;
         activeTask.completions++;
 
-        const currentEra = state.eras[state.currentEra];
-        if (currentEra && currentEra.finalTaskId === activeTask.id) {
-          if (!state.eraCompletions[state.currentEra]) {
-            state.eraCompletions[state.currentEra] = 0;
-          }
-          state.eraCompletions[state.currentEra]++;
-          reanchorTimeline(state);
-          return;
-        }
-
-        if (activeTask.requiredItemId) {
-          const currentAmount = state.inventory[activeTask.requiredItemId] || 0;
-          if (currentAmount > 0) {
-            state.inventory[activeTask.requiredItemId] = currentAmount - 1;
-          }
-        }
-
+        // --- REWARD LOGIC: TRIGGER ONLY ON COMPLETION ---
         if (activeTask.rewards) {
           for (const reward of activeTask.rewards) {
-            if (Math.random() < reward.chance) {
+            const roll = Math.random();
+            if (roll < reward.chance) {
               const currentAmount = state.inventory[reward.itemId] || 0;
               state.inventory[reward.itemId] = currentAmount + reward.amount;
             }
           }
         }
-      }
 
-      // 3. Mission Completion
-      if (activeTask.maxCompletions > 0 && activeTask.completions >= activeTask.maxCompletions) {
-        state.activeTaskId = null;
+        // --- DYNAMIC ERA PROGRESSION CHECK ---
+        const currentEraDef = state.eras[state.currentEra];
+        if (currentEraDef && activeTask.id === currentEraDef.finalTaskId) {
+           if (!state.eraCompletions[state.currentEra]) {
+             state.eraCompletions[state.currentEra] = 0;
+           }
+           state.eraCompletions[state.currentEra]++;
+           reanchorTimeline(state);
+           return; 
+        }
+        // -------------------------------------
+
+        if (activeTask.maxCompletions > 0 && activeTask.completions >= activeTask.maxCompletions) {
+          state.activeTaskId = null;
+        }
       }
     }
   } 
@@ -93,15 +85,20 @@ export function tick(state: GameState, delta: number) {
 }
 
 export function updateSkill(skill: Skill, taskXP: number, delta: number) {
+  // 1. Use the compounding multiplier for learning
   const multiplier = Math.pow(1.01, skill.permanentMastery) * Math.pow(1.05, skill.currentFocus);
   
+  // 2. Focus XP (accelerated by focus and mastery)
   skill.focusXP += taskXP * multiplier * delta;
+  
   const focusThreshold = (skill.currentFocus + 1) * 100;
   if (skill.focusXP >= focusThreshold) {
     skill.focusXP -= focusThreshold;
     skill.currentFocus++;
   }
   
+  // 3. Mastery XP (Now ALSO accelerated by the multiplier!)
+  // This makes long runs feel mandatory for high-yield permanent progress
   skill.masteryXP += (taskXP * 0.1) * multiplier * delta;
 
   const masteryThreshold = (skill.permanentMastery + 1) * 100;
@@ -116,13 +113,14 @@ export function reanchorTimeline(state: GameState) {
   state.activeTaskId = null;
   state.isPaused = false;
   state.collapseTimer = 0;
-  state.timeInLoop = 0; // Reset loop timer
+  state.timeInLoop = 0; 
+  // timelineAdvanced removed (Architectural choice: use eraCompletions instead)
 
-  // Reset all skills' Focus and add Mastery XP
+  // Reset all skills' Focus
   for (const skillKey in state.skills) {
     const skill = state.skills[skillKey];
-    skill.currentFocus = 0; // Reset Focus level
-    skill.focusXP = 0; // Reset Focus XP
+    skill.currentFocus = 0;
+    skill.focusXP = 0;
   }
 
   // Reset all tasks' progress
@@ -139,35 +137,41 @@ export function calculateEntropyRate(state: GameState): number {
 
   const weight = activeTask ? activeTask.entropyWeight : 1; // Default weight is 1 if not specified
 
-  const scalingMultiplier = 1 + (state.timeInLoop / 60) * SCALING_FACTOR; // Increase decay over time
-  return BASE_STABILITY_DECAY * scalingMultiplier * weight; // Base decay scaled by time in loop
+  // Compounding Entropy: 20% increase per minute
+  const scalingMultiplier = Math.pow(ENTROPY_SCALING_RATE, state.timeInLoop / 60);
+  return BASE_STABILITY_DECAY * scalingMultiplier * weight; 
 }
 
 export function consumeItem(state: GameState, itemId: string): boolean {
   const currentAmount = state.inventory[itemId] || 0;
   if (currentAmount <= 0) return false;
   
-  const restorationValues: Record<string, number> = {
-    rawEnergy: 15, // Restores energy
-  };
+  if (itemId === 'rawEnergy') {
+    state.stability += 15;
+    if (state.stability > state.maxStability) state.stability = state.maxStability;
+    state.inventory[itemId] = currentAmount - 1;
+    return true;
+  }
 
-  const amount = restorationValues[itemId] || 0;
+  if (itemId === 'temporalRegulator') {
+    state.stability += 10;
+    if (state.stability > state.maxStability) state.stability = state.maxStability;
+    state.inventory[itemId] = currentAmount - 1;
+    return true;
+  }
 
-  state.inventory[itemId] = currentAmount - 1;
-  state.stability = Math.min(state.stability + amount, state.maxStability);
-  return true;
+  return false;
 }
 
 export function isTaskUnlocked(state: GameState, task: Task): boolean {
-  if (task.unlocked) return true; // If already unlocked, return true
-
-  if (!task.unlockRequirements) return false; // No requirements means it can't be unlocked
+  if (task.unlocked) return true;
 
   const reqs = task.unlockRequirements;
+  if (!reqs) return true;
 
   if (reqs.skillLevels) {
     for (const [skillId, level] of Object.entries(reqs.skillLevels)) {
-      if (state.skills[skillId]?.currentFocus < level) {
+      if ((state.skills[skillId]?.currentFocus || 0) < level) {
         return false;
       }
     }

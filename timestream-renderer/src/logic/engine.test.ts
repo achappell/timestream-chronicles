@@ -25,10 +25,10 @@ describe("Temporal Engine Heartbeat", () => {
       expect(rate).toBe(0.5);
     });
 
-    it("should scale decay by 10% (0.55) after 60 seconds", () => {
+    it("should scale decay by 20% (0.6) after 60 seconds", () => {
       const state = createMockState({ activeTaskId: "test-task", timeInLoop: 60 });
       const rate = calculateEntropyRate(state);
-      expect(rate).toBeCloseTo(0.55, 5);
+      expect(rate).toBeCloseTo(0.6, 5);
     });
 
     it("should correctly reduce stability based on scaled rate", () => {
@@ -37,9 +37,9 @@ describe("Temporal Engine Heartbeat", () => {
         timeInLoop: 60, 
         stability: 100 
       });
-      // At 60s, decay is 0.55/s. A 1s tick should result in 99.45
+      // At 60s (1 min), decay is 0.5 * 1.20^1 = 0.6/s. A 1s tick should result in 99.4
       tick(state, 1.0);
-      expect(state.stability).toBeCloseTo(99.45, 5);
+      expect(state.stability).toBeCloseTo(99.4, 5);
     });
 
     it("should scale decay by the task's entropyWeight", () => {

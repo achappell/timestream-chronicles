@@ -1,5 +1,35 @@
 [
   {
+    "id": "scavengePerimeter",
+    "name": "Scavenge Perimeter",
+    "description": "Search the edges of the junkyard for loose copper, springs, and usable valves.",
+    "skillId": "scavenging",
+    "xpPerSec": 5,
+    "entropyWeight": 0.1,
+    "currentProgress": 0,
+    "targetProgress": 30,
+    "completions": 0,
+    "maxCompletions": 0,
+    "unlocked": true,
+    "rewards": [{ "itemId": "scrap", "amount": 1, "chance": 1.0 }]
+  },
+  {
+    "id": "assembleRegulator",
+    "name": "Assemble Regulator",
+    "description": "Cobble together a crude temporal regulator from your collected scrap pile.",
+    "skillId": "tinkering",
+    "xpPerSec": 10,
+    "entropyWeight": 0.5,
+    "currentProgress": 0,
+    "targetProgress": 60,
+    "completions": 0,
+    "maxCompletions": 0,
+    "unlocked": false,
+    "unlockRequirements": { "skillLevels": { "scavenging": 2 } },
+    "requiredItemId": "scrap",
+    "rewards": [{ "itemId": "temporalRegulator", "amount": 1, "chance": 1.0 }]
+  },
+  {
     "id": "evadeCuriosity",
     "name": "Evade Curiosity",
     "description": "Duck behind the scrap piles to avoid being seen by Ian and Barbara.",
@@ -10,7 +40,8 @@
     "targetProgress": 50,
     "completions": 0,
     "maxCompletions": 0,
-    "unlocked": true
+    "unlocked": false,
+    "unlockRequirements": { "skillLevels": { "scavenging": 3 } }
   },
   {
     "id": "runDiagnostics",
@@ -24,11 +55,7 @@
     "completions": 0,
     "maxCompletions": 0,
     "unlocked": false,
-    "unlockRequirements": {
-      "skillLevels": {
-        "stealth": 2
-      }
-    }
+    "unlockRequirements": { "skillLevels": { "stealth": 2 } }
   },
   {
     "id": "scavengeSpares",
@@ -42,11 +69,7 @@
     "completions": 0,
     "maxCompletions": 0,
     "unlocked": false,
-    "unlockRequirements": {
-      "skillLevels": {
-        "scientificInquiry": 2
-      }
-    },
+    "unlockRequirements": { "skillLevels": { "scientificInquiry": 2 } },
     "rewards": [
       {
         "itemId": "components",

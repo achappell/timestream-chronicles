@@ -16,5 +16,23 @@
     "currentFocus": 0,
     "focusXP": 0,
     "masteryXP": 0
+  },
+  "scavenging": {
+    "id": "scavenging",
+    "name": "Scavenging",
+    "description": "Efficiency in finding raw materials and useful junk in primitive environments.",
+    "permanentMastery": 0,
+    "currentFocus": 0,
+    "focusXP": 0,
+    "masteryXP": 0
+  },
+  "tinkering": {
+    "id": "tinkering",
+    "name": "Tinkering",
+    "description": "The ability to assemble complex temporal technology from simple scrap components.",
+    "permanentMastery": 0,
+    "currentFocus": 0,
+    "focusXP": 0,
+    "masteryXP": 0
   }
 }

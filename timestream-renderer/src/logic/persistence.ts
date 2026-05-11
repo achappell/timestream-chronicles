@@ -82,3 +82,20 @@ export function clearSave() {
   localStorage.removeItem(SAVE_KEY);
   window.location.reload();
 }
+
+export function consumeItem(state: GameState, itemId: string) {
+  const amount = state.inventory[itemId] || 0;
+  if (amount <= 0) return;
+
+  if (itemId === 'rawEnergy') {
+    state.stability += 15;
+    if (state.stability > state.maxStability) state.stability = state.maxStability;
+    state.inventory[itemId] = amount - 1;
+  }
+
+  if (itemId === 'temporalRegulator') {
+    state.stability += 10; // The "Top-Off" burst
+    if (state.stability > state.maxStability) state.stability = state.maxStability;
+    state.inventory[itemId] = amount - 1;
+  }
+}

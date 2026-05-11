@@ -2,7 +2,7 @@
 
 - **The Entropy & Survival Paradigm:**
     - **Stability (The Clock):** Your only survival resource. It decays constantly. When it hits zero, the loop ends.
-    - **Scaling Decay:** The base decay rate increases the longer the loop persists. Time itself fights against your presence. (Implementation: +10% entropy per minute). Readouts are displayed as a "Per-Second" value (e.g., `0.50%/s`).
+    - **Scaling Decay:** The base decay rate increases the longer the loop persists. Time itself fights against your presence. (Implementation: +20% compounding entropy per minute). Readouts are displayed as a "Per-Second" value (e.g., `0.50%/s`).
     - **Entropy Weight:** Every active task has a "weight" that increases the rate of Stability decay. Readouts reflect the total cumulative weight per second.
     - **Narrative Milestones (Reincarnation):** Major progression shifts (e.g., halving base entropy, unlocking new UI eras, changing fundamental rules) are tied to "Story Milestones" and Doctor Reincarnations. Skill Mastery remains a tool for reaching these milestones, but does not provide major rule-changing buffs on its own.
 
