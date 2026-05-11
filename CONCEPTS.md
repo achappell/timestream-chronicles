@@ -19,9 +19,10 @@
 - **Task Completion:** A mission protocol is considered "Finalized" when its `completions` count reaches the `maxCompletions` limit. Once finalized, the task is automatically deactivated, triggering the **Sequence Buffer** or engaging **Safety Stasis**.
 
 - **The Dual-Progress Paradigm:**
-    - **Mastery (The Foundation):** Permanent, slow-growing levels that provide multiplicative bonuses to XP gains and survival efficiency.
-    - **Focus (The Surge):** Rapidly cycling levels gained during a single loop. Focus levels act as "keys" to unlock more complex tasks.
-    - **The Math:** $FocusSpeed = BaseXP \times (1 + (MasteryLevel \times 0.1))$.
+    - **Mastery (The Foundation):** Permanent, slow-growing levels that provide compounding bonuses to speed and learning efficiency. Each level provides a 1% (1.01x) compounding multiplier.
+    - **Focus (The Surge):** Rapidly cycling levels gained during a single loop. Focus levels provide a 5% (1.05x) compounding multiplier and act as "keys" to unlock more complex tasks.
+    - **Quadratic Growth:** Mastery XP gain is accelerated by the current focus multiplier, ensuring that deep survival runs yield exponentially higher permanent rewards.
+    - **The Math:** $Multiplier = 1.01^{MasteryLevel} \times 1.05^{FocusLevel}$.
 
 ---
 

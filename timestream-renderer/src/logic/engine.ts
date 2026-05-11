@@ -93,7 +93,8 @@ export function tick(state: GameState, delta: number) {
 }
 
 export function updateSkill(skill: Skill, taskXP: number, delta: number) {
-  const multiplier = 1 + (skill.permanentMastery * 0.1) * (1 + skill.currentFocus * 0.05); // Mastery and Focus can speed up learning
+  const multiplier = Math.pow(1.01, skill.permanentMastery) * Math.pow(1.05, skill.currentFocus);
+  
   skill.focusXP += taskXP * multiplier * delta;
   const focusThreshold = (skill.currentFocus + 1) * 100;
   if (skill.focusXP >= focusThreshold) {
@@ -101,7 +102,7 @@ export function updateSkill(skill: Skill, taskXP: number, delta: number) {
     skill.currentFocus++;
   }
   
-  skill.masteryXP += taskXP * 0.1 * delta;
+  skill.masteryXP += (taskXP * 0.1) * multiplier * delta;
 
   const masteryThreshold = (skill.permanentMastery + 1) * 100;
   if (skill.masteryXP >= masteryThreshold) {

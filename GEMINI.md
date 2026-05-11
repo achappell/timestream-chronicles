@@ -11,10 +11,12 @@
     * **Stabilization**: Items or "Narrative Anchors" that restore stability or slow decay. Major stabilization buffs are unlocked through story milestones/reincarnations.
 * **Inventory**: A collection of components and consumables discovered during tasks.
 * **Temporal Re-Anchoring**: The loop reset. Stability is restored, Focus/Inventory is wiped (unless "Secured"), Mastery persists.
-* **Mastery (Permanent)**: Slow-growing levels providing bonuses to XP and survival.
-* **Focus (Temporal)**: Rapidly cycling levels that unlock tasks and narrative milestones.
+* **Mastery (Permanent)**: Slow-growing compounding levels (1.01x) providing bonuses to XP and survival.
+* **Focus (Temporal)**: Rapidly cycling compounding levels (1.05x) that unlock tasks and narrative milestones.
 * **The Formula**:
-    $$FocusSpeed = BaseXP \times (1 + (MasteryLevel \times 0.1))$$
+    $$Multiplier = 1.01^{MasteryLevel} \times 1.05^{FocusLevel}$$
+    $$FocusXP = BaseXP \times Multiplier$$
+    $$MasteryXP = (BaseXP \times 0.1) \times Multiplier$$
 * **Chronological Stasis**: A pause state that halts the global `tick` loop.
 
 ## 🛠️ TECHNICAL STACK & STANDARDS
