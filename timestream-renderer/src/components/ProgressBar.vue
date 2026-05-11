@@ -54,7 +54,7 @@ const props = defineProps<{
   font-weight: 800;
   z-index: 10;
   color: var(--color-focus-white);
-  text-shadow: 1px 1px 2px #000;
+  text-shadow: var(--text-shadow-label);
   pointer-events: none;
   line-height: 16px;
 }
@@ -67,7 +67,7 @@ const props = defineProps<{
   font-weight: 800;
   z-index: 10;
   color: var(--color-text-bright);
-  text-shadow: 1px 1px 2px #000;
+  text-shadow: var(--text-shadow-label);
   pointer-events: none;
   line-height: 16px;
 }

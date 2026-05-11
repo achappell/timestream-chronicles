@@ -83,8 +83,8 @@ const processImport = () => {
 }
 
 .control-grid button.danger:hover {
-  background: #440000;
-  border-color:#ff0000
+  background: var(--color-warning-bg);
+  border-color: var(--color-warning);
 }
 
 .h3 {

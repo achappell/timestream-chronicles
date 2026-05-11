@@ -26,6 +26,14 @@ export function tick(state: GameState, delta: number) {
     if (activeTask) {
       const skill = state.skills[activeTask.skillId];
 
+      if (activeTask.requiredItemId) {
+        const count = state.inventory[activeTask.requiredItemId] || 0;
+        if (count === 0) {
+          state.activeTaskId = null;
+          return;
+        }
+      }
+
       // 1. Continuous XP Award (Updates Skill Bars smoothly)
       if (skill) {
         updateSkill(skill, activeTask.xpPerSec, delta);
@@ -38,6 +46,23 @@ export function tick(state: GameState, delta: number) {
         activeTask.currentProgress = 0;
         activeTask.completions++;
 
+        const currentEra = state.eras[state.currentEra];
+        if (currentEra && currentEra.finalTaskId === activeTask.id) {
+          if (!state.eraCompletions[state.currentEra]) {
+            state.eraCompletions[state.currentEra] = 0;
+          }
+          state.eraCompletions[state.currentEra]++;
+          reanchorTimeline(state);
+          return;
+        }
+
+        if (activeTask.requiredItemId) {
+          const currentAmount = state.inventory[activeTask.requiredItemId] || 0;
+          if (currentAmount > 0) {
+            state.inventory[activeTask.requiredItemId] = currentAmount - 1;
+          }
+        }
+
         if (activeTask.rewards) {
           for (const reward of activeTask.rewards) {
             if (Math.random() < reward.chance) {
@@ -49,7 +74,7 @@ export function tick(state: GameState, delta: number) {
       }
 
       // 3. Mission Completion
-      if (activeTask.completions >= activeTask.maxCompletions) {
+      if (activeTask.maxCompletions > 0 && activeTask.completions >= activeTask.maxCompletions) {
         state.activeTaskId = null;
       }
     }
@@ -141,7 +166,7 @@ export function isTaskUnlocked(state: GameState, task: Task): boolean {
 
   if (reqs.skillLevels) {
     for (const [skillId, level] of Object.entries(reqs.skillLevels)) {
-      if (state.skills[skillId]?.permanentMastery < level) {
+      if (state.skills[skillId]?.currentFocus < level) {
         return false;
       }
     }

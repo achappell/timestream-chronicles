@@ -1,0 +1,176 @@
+[
+  {
+    "id": "evadeCuriosity",
+    "name": "Evade Curiosity",
+    "description": "Duck behind the scrap piles to avoid being seen by Ian and Barbara.",
+    "skillId": "stealth",
+    "xpPerSec": 5,
+    "entropyWeight": 0.2,
+    "currentProgress": 0,
+    "targetProgress": 50,
+    "completions": 0,
+    "maxCompletions": 0,
+    "unlocked": true
+  },
+  {
+    "id": "runDiagnostics",
+    "name": "Run Exterior Diagnostics",
+    "description": "Open the TARDIS service panel disguised as a police box and check the exterior nodes.",
+    "skillId": "scientificInquiry",
+    "xpPerSec": 25,
+    "entropyWeight": 2.0,
+    "currentProgress": 0,
+    "targetProgress": 200,
+    "completions": 0,
+    "maxCompletions": 0,
+    "unlocked": false,
+    "unlockRequirements": {
+      "skillLevels": {
+        "stealth": 2
+      }
+    }
+  },
+  {
+    "id": "scavengeSpares",
+    "name": "Scavenge Mundane Spares",
+    "description": "Search the junkyard for primitive materials to patch the fluid link.",
+    "skillId": "scientificInquiry",
+    "xpPerSec": 15,
+    "entropyWeight": 1.0,
+    "currentProgress": 0,
+    "targetProgress": 150,
+    "completions": 0,
+    "maxCompletions": 0,
+    "unlocked": false,
+    "unlockRequirements": {
+      "skillLevels": {
+        "scientificInquiry": 2
+      }
+    },
+    "rewards": [
+      {
+        "itemId": "components",
+        "amount": 1,
+        "chance": 0.5
+      }
+    ]
+  },
+  {
+    "id": "deflectPatrolman",
+    "name": "Deflect the Patrolman",
+    "description": "A local policeman is nearing the gate. Create a subtle diversion to keep him away.",
+    "skillId": "stealth",
+    "xpPerSec": 30,
+    "entropyWeight": 1.0,
+    "currentProgress": 0,
+    "targetProgress": 250,
+    "completions": 0,
+    "maxCompletions": 0,
+    "unlocked": false,
+    "unlockRequirements": {
+      "skillLevels": {
+        "stealth": 5
+      }
+    }
+  },
+  {
+    "id": "siphonEnergy",
+    "name": "Siphon Primitive Energy",
+    "description": "Rig a temporary tap into the local 1963 power grid to charge the ship.",
+    "skillId": "scientificInquiry",
+    "xpPerSec": 20,
+    "entropyWeight": 1.5,
+    "currentProgress": 0,
+    "targetProgress": 300,
+    "completions": 0,
+    "maxCompletions": 0,
+    "unlocked": false,
+    "unlockRequirements": {
+      "skillLevels": {
+        "scientificInquiry": 4,
+        "stealth": 5
+      }
+    },
+    "rewards": [
+      {
+        "itemId": "rawEnergy",
+        "amount": 1,
+        "chance": 1.0
+      }
+    ]
+  },
+  {
+    "id": "calibrateFluidLink",
+    "name": "Calibrate the Fluid Link",
+    "description": "Perform the delicate math required to bridge the damaged fluid link with scavenged scrap.",
+    "skillId": "scientificInquiry",
+    "xpPerSec": 35,
+    "entropyWeight": 1.5,
+    "currentProgress": 0,
+    "targetProgress": 600,
+    "completions": 0,
+    "maxCompletions": 0,
+    "unlocked": false,
+    "unlockRequirements": {
+      "skillLevels": {
+        "scientificInquiry": 6
+      }
+    },
+    "requiredItemId": "components"
+  },
+  {
+    "id": "confrontTeachers",
+    "name": "Confront the Teachers",
+    "description": "They've found the box. Step out of the shadows and keep them talking while you finalize coordinates.",
+    "skillId": "stealth",
+    "xpPerSec": 50,
+    "entropyWeight": 3.5,
+    "currentProgress": 0,
+    "targetProgress": 500,
+    "completions": 0,
+    "maxCompletions": 1,
+    "unlocked": false,
+    "unlockRequirements": {
+      "skillLevels": {
+        "scientificInquiry": 8,
+        "stealth": 8
+      }
+    }
+  },
+  {
+    "id": "overrideControls",
+    "name": "Override Isomorphic Controls",
+    "description": "Force your signature onto the console to override the safety locks.",
+    "skillId": "scientificInquiry",
+    "xpPerSec": 60,
+    "entropyWeight": 3.0,
+    "currentProgress": 0,
+    "targetProgress": 800,
+    "completions": 0,
+    "maxCompletions": 1,
+    "unlocked": false,
+    "unlockRequirements": {
+      "taskCompletions": {
+        "confrontTeachers": 1
+      }
+    }
+  },
+  {
+    "id": "emergencyDematerialization",
+    "name": "Emergency Dematerialization",
+    "description": "Yank the primary lever to flee 1963, taking the teachers with you into the unknown.",
+    "skillId": "scientificInquiry",
+    "xpPerSec": 100,
+    "entropyWeight": 0.1,
+    "currentProgress": 0,
+    "targetProgress": 1000,
+    "completions": 0,
+    "maxCompletions": 1,
+    "unlocked": false,
+    "unlockRequirements": {
+      "taskCompletions": {
+        "overrideControls": 1
+      }
+    }
+  }
+]

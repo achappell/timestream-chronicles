@@ -4,10 +4,14 @@ import GameHeader from './components/GameHeader.vue';
 import SkillCard from './components/SkillCard.vue';
 import { calculateEntropyRate, tick as engineTick, reanchorTimeline, consumeItem, isTaskUnlocked } from './logic/engine';
 import { loadGame, saveGame, clearSave } from './logic/persistence';
-import type { GameState } from './types';
+import type { GameState, Skill, Task, Era } from './types';
 import ProgressBar from './components/ProgressBar.vue';
 import SystemMenu from './components/SystemMenu.vue';
 import { importSave, exportSave } from './logic/persistence';
+import defaultSkills from './data/skills.json';
+import defaultTasks from './data/tasks.json';
+import defaultEras from './data/eras.json';
+import TaskTooltip from './components/TaskTooltip.vue';
 
 const appVersion = __APP_VERSION__; // Injected at build time
 
@@ -19,61 +23,15 @@ const DEFAULT_STATE: GameState = {
   timeInLoop: 0,
   activeTaskId: null,
   currentEra: 'hartnell', 
-  skills: {
-    scientificInquiry: { 
-      id: 'scientificInquiry',
-      name: 'Scientific Inquiry', 
-      description: 'The ability to analyze and understand the world around you, uncovering hidden knowledge and insights.',
-      permanentMastery: 0, 
-      currentFocus: 0, 
-      focusXP: 0,
-      masteryXP: 0 
-    },
-    stealth: { 
-      id: 'stealth',
-      name: 'Stealth', 
-      description: 'The skill of moving unseen and unheard, allowing you to navigate dangerous environments without detection.',
-      permanentMastery: 0, 
-      currentFocus: 0, 
-      focusXP: 0,
-      masteryXP: 0 
-    }
-  },
-  tasks: [
-  { 
-    id: 'lurk', 
-    name: 'Lurk in Shadows', 
-    description: 'Practice moving unseen through the environment to improve your stealth skills.',
-    skillId: 'stealth', 
-    xpPerSec: 10, 
-    currentProgress: 0,
-    targetProgress: 100, 
-    completions: 0,
-    maxCompletions: 5,
-    unlocked: true,
-    entropyWeight: 0.8,
-    rewards: [
-      { itemId: 'rawEnergy', amount: 1, chance: 1 } 
-    ]
-  },
-  { 
-    id: 'analyze', 
-    name: 'Analyze Junkyard', 
-    description: 'Examine the junkyard to uncover hidden knowledge and boost your scientific inquiry skills.',
-    skillId: 'scientificInquiry', 
-    xpPerSec: 15, 
-    currentProgress: 0,
-    targetProgress: 100, 
-    completions: 0,
-    maxCompletions: 5,
-    unlocked: true,
-    entropyWeight: 1.2,
-  }
-  ],
-  inventory: { }
+  skills: defaultSkills as Record<string, Skill>,
+  tasks: defaultTasks as Task[],
+  inventory: { },
+  eraCompletions: { },
+  eras: defaultEras as Record<string, Era>
 };
 
 const state: GameState = reactive(loadGame(DEFAULT_STATE));
+const inspectedTask = ref<Task | null>(null);
 
 // TARDIS Auto-Save Protocol: Every 30 seconds
 setInterval(() => {
@@ -159,6 +117,7 @@ const handleExport = () => {
       <div class="task-list">
         <template v-for="task in state.tasks" :key="task.id">
           <button 
+            class="task-action-btn"
             v-if="isTaskUnlocked(state, task)"
             @click="state.activeTaskId = task.id"
             :class="{ 
@@ -168,8 +127,12 @@ const handleExport = () => {
               :progress="(task.currentProgress / task.targetProgress) * 100" 
               variant="secondary"
               :label="task.name"
-              :count="`${task.completions}/${task.maxCompletions}`">
+              :count="task.maxCompletions > 0 ? `${task.completions}/${task.maxCompletions}` : ''">
             </ProgressBar>
+            <button class="info-btn" @click.stop="inspectedTask = task" aria-label="Task Details"
+                    v-if="isTaskUnlocked(state, task)">
+              ?
+            </button>
           </button>
         </template>
       </div>
@@ -205,6 +168,11 @@ const handleExport = () => {
       Version: {{ appVersion }}
     </div>
     <div class="crt-overlay"></div>
+    <TaskTooltip
+    v-if="inspectedTask"
+    :task="inspectedTask"
+    @close="inspectedTask = null"
+    />
   </div>
 </template>
 
@@ -280,7 +248,7 @@ button {
 }
 
 .reset-btn:hover {
-  color: #ff0000; /* Warning red */
+  color: var(--color-warning); /* Warning red */
   text-decoration: underline;
 }
 
@@ -386,6 +354,31 @@ button {
   pointer-events: none;
   opacity: 0.02;
   animation: crt-flicker 0.1s infinite;
+}
+
+.task-container {
+  position: relative;
+  display: flex;
+}
+
+.info-btn {
+  width: 24px; height: 24px;
+  min-width: 24px; min-height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-vortex-black);
+  border: 1px solid var(--color-text-dim);
+  color: var(--color-text-dim);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+
+.info-btn:hover {
+  color: var(--color-focus-white);
+  border-color: var(--color-focus-white);
 }
 
 @media (max-width: 600px) {

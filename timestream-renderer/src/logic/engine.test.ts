@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { tick, calculateEntropyRate } from "./engine";
-import { createMockState, createMockTask } from "./test-utils";
+import { tick, calculateEntropyRate, isTaskUnlocked } from "./engine";
+import { createMockState, createMockTask, createMockSkill } from "./test-utils";
 
 describe("Temporal Engine Heartbeat", () => {
   
@@ -41,6 +41,13 @@ describe("Temporal Engine Heartbeat", () => {
       tick(state, 1.0);
       expect(state.stability).toBeCloseTo(99.45, 5);
     });
+
+    it("should scale decay by the task's entropyWeight", () => {
+      const task = createMockTask({ entropyWeight: 2 });
+      const state = createMockState({ activeTaskId: task.id, tasks: [task], timeInLoop: 0 });
+      const rate = calculateEntropyRate(state);
+      expect(rate).toBe(1.0); // 0.5 base * 2 weight
+    });
   });
 
   describe("Mission Cycles & XP", () => {
@@ -59,19 +66,93 @@ describe("Temporal Engine Heartbeat", () => {
       expect(state.tasks[0].currentProgress).toBe(0);
     });
 
-    it("should auto-pause when max completions are reached", () => {
+    it("should increment eraCompletions and reanchor when the era's final task completes", () => {
       const task = createMockTask({ 
-        currentProgress: 9, 
-        targetProgress: 10, 
-        completions: 4, 
-        maxCompletions: 5 
+        id: 'final-era-task',
+        currentProgress: 99.5, 
+        targetProgress: 100, 
+        completions: 0, 
+        maxCompletions: 1 
       });
-      const state = createMockState({ activeTaskId: task.id, tasks: [task] });
+      const state = createMockState({ 
+        activeTaskId: task.id, 
+        tasks: [task], 
+        currentEra: 'test-era',
+        eraCompletions: { 'test-era': 0 },
+        eras: {
+          'test-era': { id: 'test-era', name: 'Test', description: 'Test', finalTaskId: 'final-era-task' }
+        }
+      } as any); // Cast to any to bypass type check temporarily until user updates types.ts
       tick(state, 1.0);
-      expect(state.activeTaskId).toBe(null);
-      // Next tick will trigger Safety Stasis
-      tick(state, 0.1);
-      expect(state.isPaused).toBe(true);
+      expect(state.eraCompletions['test-era']).toBe(1);
+      expect(state.activeTaskId).toBe(null); // Reanchored
+      expect(state.timeInLoop).toBe(0); // Reanchored
+    });
+  });
+
+  describe("Task Unlock Logic", () => {
+    it("should be unlocked if unlocked property is true", () => {
+      const task = createMockTask({ unlocked: true });
+      const state = createMockState();
+      expect(isTaskUnlocked(state, task)).toBe(true);
+    });
+
+    it("should be unlocked if skill Focus level requirement is met", () => {
+      const state = createMockState({
+        skills: {
+          "test-skill": createMockSkill({ currentFocus: 2 })
+        }
+      });
+      const task = createMockTask({
+        unlocked: false,
+        unlockRequirements: {
+          skillLevels: { "test-skill": 2 }
+        }
+      });
+      expect(isTaskUnlocked(state, task)).toBe(true);
+    });
+
+    it("should NOT be unlocked if skill Focus level requirement is not met", () => {
+      const state = createMockState({
+        skills: {
+          "test-skill": createMockSkill({ currentFocus: 1 })
+        }
+      });
+      const task = createMockTask({
+        unlocked: false,
+        unlockRequirements: {
+          skillLevels: { "test-skill": 2 }
+        }
+      });
+      expect(isTaskUnlocked(state, task)).toBe(false);
+    });
+
+    it("should be unlocked if task completion requirement is met", () => {
+      const completedTask = createMockTask({ id: "prereq-task", completions: 1 });
+      const state = createMockState({
+        tasks: [completedTask]
+      });
+      const task = createMockTask({
+        unlocked: false,
+        unlockRequirements: {
+          taskCompletions: { "prereq-task": 1 }
+        }
+      });
+      expect(isTaskUnlocked(state, task)).toBe(true);
+    });
+
+    it("should NOT be unlocked if task completion requirement is not met", () => {
+      const completedTask = createMockTask({ id: "prereq-task", completions: 0 });
+      const state = createMockState({
+        tasks: [completedTask]
+      });
+      const task = createMockTask({
+        unlocked: false,
+        unlockRequirements: {
+          taskCompletions: { "prereq-task": 1 }
+        }
+      });
+      expect(isTaskUnlocked(state, task)).toBe(false);
     });
   });
 

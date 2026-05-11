@@ -19,31 +19,22 @@ To establish a playable "Vertical Slice" for the MVP that proves the core increm
    - **Skill:** Stealth
    - **Action:** Duck behind the scrap piles to avoid being seen by Ian and Barbara.
    - **Metrics:** Low XP, Very Low Entropy.
+   - **Mechanical Value:** The "Safe Baseline." Introduces the core incremental loop and Stealth progression with minimal risk.
    - **Unlock:** Available immediately.
 
-2. **Monitor Intruder Movement**
-   - **Skill:** Stealth
-   - **Action:** Navigate the junk maze silently to keep a constant eye on the teachers.
-   - **Metrics:** Moderate XP, Moderate Entropy.
-   - **Unlock:** Requires Stealth Level 2.
-
-3. **Assess Human Intent**
-   - **Skill:** Scientific Inquiry
-   - **Action:** Observe the teachers' interactions from cover to determine their level of threat.
-   - **Metrics:** Moderate XP, Low Entropy.
-   - **Unlock:** Requires Stealth Level 3.
-
-4. **Run Exterior Diagnostics**
+2. **Run Exterior Diagnostics**
    - **Skill:** Scientific Inquiry
    - **Action:** Open the TARDIS service panel disguised as a police box and check the exterior nodes.
    - **Metrics:** High XP, High Entropy.
-   - **Unlock:** Requires Science Level 2.
+   - **Mechanical Value:** The "Risk/Reward Trade-off." Introduces the Science skill and teaches the player that faster progression burns Stability rapidly.
+   - **Unlock:** Requires Stealth Level 2.
 
-5. **Scavenge Mundane Spares**
+3. **Scavenge Mundane Spares**
    - **Skill:** Scientific Inquiry
    - **Action:** Search the junkyard for primitive materials (mercury, copper wire) to patch the fluid link.
    - **Metrics:** Moderate XP, Moderate Entropy.
-   - **Unlock:** Requires Science Level 3.
+   - **Mechanical Value:** The "Inventory Protocol." Introduces item drops. Yields the "components" required to attempt Phase 2 tasks.
+   - **Unlock:** Requires Science Level 2.
 
 ---
 

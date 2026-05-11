@@ -26,6 +26,8 @@ html, body {
     --color-text-bright: #eeeeee;
     --color-focus-white: #ffffff;
     --color-accent-blue: #00aaff;
+    --color-warning: #ff0000;
+    --color-warning-bg: #440000;
 
     --transition-smooth: all 0.2s ease;
     --transition-heartbeat: width 0.1s linear;

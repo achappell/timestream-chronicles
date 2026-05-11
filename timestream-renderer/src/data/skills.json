@@ -1,0 +1,20 @@
+{
+  "scientificInquiry": {
+    "id": "scientificInquiry",
+    "name": "Scientific Inquiry",
+    "description": "The ability to analyze and understand the world around you, uncovering hidden knowledge and insights.",
+    "permanentMastery": 0,
+    "currentFocus": 0,
+    "focusXP": 0,
+    "masteryXP": 0
+  },
+  "stealth": {
+    "id": "stealth",
+    "name": "Stealth",
+    "description": "The skill of moving unseen and unheard, allowing you to navigate dangerous environments without detection.",
+    "permanentMastery": 0,
+    "currentFocus": 0,
+    "focusXP": 0,
+    "masteryXP": 0
+  }
+}

@@ -4,24 +4,24 @@
 - **[X] Frame-Rate Independence:** Refactor the `tick` function to use a `delta` time variable.
 - **[X] The Stasis Toggle (Pause):** Toggle pause state to halt the global `tick` loop.
 - **[X] The Entropy Refactor:** Scaling Decay, Engine Cleanup, Entropy Display, Auto-Pause.
-- **[ ] Entropy Weight Integration:**
-    - [ ] Update `Task` interface to include `entropyWeight` (multiplier for base decay).
-    - [ ] Refactor `calculateEntropyRate` in `engine.ts` to factor in the active task's weight.
-- **[ ] Task Unlock & Visibility Logic:**
-    - [ ] Update `Task` interface with `unlockRequirements` (Skill Levels, Task Completions).
-    - [ ] Implement `isTaskUnlocked(state, task)` helper in `engine.ts`.
-    - [ ] Update `App.vue` to filter the task list, only showing unlocked (or "revealed") tasks.
-- **[ ] The Inventory Protocol:**
-    - [ ] Update `GameState` type to include `inventory: Record<string, number>`.
-    - [ ] Implement `reward` logic in `tick`: Tasks can grant items upon cycle completion.
-    - [ ] Create `Inventory.vue` (or add to `App.vue`) to display current item counts.
-    - [ ] Implement "Instant Actions" (e.g., Purge Artron Cells) that consume items to restore Stability.
-- **[ ] Content Injection: Totter's Lane Vertical Slice:**
-    - [ ] Define the full 12-task sequence in `App.vue` constants (Phases 1-3).
-    - [ ] Balance XP/Progress/Entropy for the entire 12-task progression tree.
-- **[ ] The Final Dematerialization (Win Condition):**
-    - [ ] Implement "Win" logic when Task #12 ("Emergency Dematerialization") is completed.
-    - [ ] Add a "Timeline Advanced" modal or transition state to signal the end of the MVP slice.
+- **[x] Entropy Weight Integration:**
+    - [x] Update `Task` interface to include `entropyWeight` (multiplier for base decay).
+    - [x] Refactor `calculateEntropyRate` in `engine.ts` to factor in the active task's weight.
+- **[x] Task Unlock & Visibility Logic:**
+    - [x] Update `Task` interface with `unlockRequirements` (Skill Levels, Task Completions).
+    - [x] Implement `isTaskUnlocked(state, task)` helper in `engine.ts`.
+    - [x] Update `App.vue` to filter the task list, only showing unlocked (or "revealed") tasks.
+- **[x] The Inventory Protocol:**
+    - [x] Update `GameState` type to include `inventory: Record<string, number>`.
+    - [x] Implement `reward` logic in `tick`: Tasks can grant items upon cycle completion.
+    - [x] Create `Inventory.vue` (or add to `App.vue`) to display current item counts.
+    - [x] Implement "Instant Actions" (e.g., Purge Artron Cells) that consume items to restore Stability.
+- **[x] Content Injection: Totter's Lane Vertical Slice:**
+    - [x] Define the full task sequence in JSON data files (Phases 1-3).
+    - [x] Balance XP/Progress/Entropy for the entire progression tree.
+- **[x] The Final Dematerialization (Win Condition):**
+    - [x] Implement "Win" logic when "Emergency Dematerialization" is completed.
+    - [x] Add a "Timeline Advanced" modal or transition state to signal the end of the MVP slice.
 - **[X] Temporal Re-Anchoring:** Reset loop logic (Stability restore, Focus wipe, Mastery preserve, Task progress cleanse).
 - **[X] Type Safety Audit:** Align `reactive` state with `GameState` interface.
 
@@ -62,7 +62,7 @@
 - **[ ] Electron IPC Bridge:** Native OS interactions and file saves.
 
 ### 📜 Polish & Expansion
-- **[ ] Action Tooltips:** Full technical readout for task XP/Entropy.
+- **[x] Action Tooltips:** Full technical readout for task XP/Entropy.
 - **[ ] The Transmission Log:** Narrative flavor text area.
 - **[ ] Aspect Ratio Lock (4:3):** Classic TV frame enforcement.
 - **[ ] Era-Appropriate Labels:** Holistic UI text audit.

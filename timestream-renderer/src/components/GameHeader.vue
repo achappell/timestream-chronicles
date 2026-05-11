@@ -80,7 +80,7 @@ const formattedTime = computed(() => {
   background: var(--color-panel-dark);
   border-bottom: 2px solid var(--color-panel-light);
   padding: 10px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: var(--font-technical);
   gap: 15px
 }
 

@@ -23,6 +23,13 @@ export interface UnlockRequirements {
   taskCompletions?: Record<string, number>;
 }
 
+export interface Era {
+  id: string;
+  name: string;
+  description: string;
+  finalTaskId: string; // The task that triggers the next era when completed
+}
+
 export interface GameState {
   stability: number; 
   maxStability: number; 
@@ -31,9 +38,11 @@ export interface GameState {
   timeInLoop: number; // Total time spent in the current loop
   activeTaskId: string | null;
   currentEra: string;
+  eraCompletions: Record<string, number>;
   skills: Record<string, Skill>;
   tasks: Task[];
   inventory: Record<string, number>;
+  eras: Record<string, Era>;
 }
 
 export interface Task {
@@ -50,4 +59,5 @@ export interface Task {
   entropyWeight: number; // How much this task contributes to entropy decay
   unlockRequirements?: UnlockRequirements; // Optional requirements for unlocking the task
   rewards?: TaskReward[]; // Optional rewards for completing the task
+  requiredItemId?: string;
 }

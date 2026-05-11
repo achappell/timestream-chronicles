@@ -39,6 +39,10 @@ export function createMockState(overrides: Partial<GameState> = {}): GameState {
     timeInLoop: 0,
     activeTaskId: null,
     currentEra: "hartnell",
+    eraCompletions: {},
+    eras: {
+      "hartnell": { id: "hartnell", name: "The First Doctor", description: "1963.", finalTaskId: "emergencyDematerialization" }
+    },
     skills: {
       "test-skill": createMockSkill(),
     },

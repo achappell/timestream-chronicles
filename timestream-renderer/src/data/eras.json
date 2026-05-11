@@ -1,0 +1,8 @@
+{
+  "hartnell": {
+    "id": "hartnell",
+    "name": "The First Doctor",
+    "description": "1963. The Reluctant Traveler.",
+    "finalTaskId": "emergencyDematerialization"
+  }
+}
