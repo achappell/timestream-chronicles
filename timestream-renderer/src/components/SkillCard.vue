@@ -74,11 +74,12 @@ const masteryProgress = computed(() => {
   border: var(--border-standard);
   width: 100%; /* Bit more width for text breathing room */
   max-width: 300px;
-  padding: 16px;
+  padding: var(--panel-padding);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-sm);
   box-shadow: var(--shadow-elevation);
+  padding-bottom: var(--space-xs);
 }
 
 .card-top {
@@ -86,7 +87,7 @@ const masteryProgress = computed(() => {
   justify-content: space-between;
   align-items: center;
   border-bottom: var(--border-subtle);
-  padding-bottom: 6px;
+  padding-bottom: var(--space-xs);
 }
 
 .skill-name { 
@@ -99,7 +100,7 @@ const masteryProgress = computed(() => {
 .multiplier { 
   background: var(--color-focus-white); 
   color: var(--color-vortex-black);
-  padding: 2px 6px;
+  padding: 2px var(--space-sm);
   font-size: 0.75rem;
   font-weight: bold;
 }

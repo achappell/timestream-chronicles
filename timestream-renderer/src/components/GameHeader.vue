@@ -56,8 +56,8 @@ const formattedTime = computed(() => {
   background: transparent;
   color: var(--color-text-dim);
   border: var(--border-standard);
-  padding: 5px 0;
-  width: 120px;
+  padding: var(--space-xs) 0;
+  width: 128px;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -79,24 +79,24 @@ const formattedTime = computed(() => {
   flex-wrap: wrap;
   background: var(--color-panel-dark);
   border-bottom: 2px solid var(--color-panel-light);
-  padding: 10px;
+  padding: var(--space-sm) var(--container-padding);;
   font-family: var(--font-technical);
-  gap: 15px
+  gap: var(--space-md)
 }
 
 .stats-group {
   display: flex;
-  gap: 30px;
+  gap: var(--space-lg);
   flex-wrap: wrap;
 }
 
 .controls-group {
   display: flex;
-  gap: 10px;
+  gap: var(--space-sm);
 }
 
 .stat { display: flex; flex-direction: column; align-items: center; }
-.mini-bar { width: 100px; height: 4px; background: var(--color-panel-mid); margin-top: 4px; }
+.mini-bar { width: 100px; height: 4px; background: var(--color-panel-mid); margin-top: var(--space-xs); }
 .fill { height: 100%; background: var(--color-text-bright); }
 
 /* Inside GameHeader.vue <style> */

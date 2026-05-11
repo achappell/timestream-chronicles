@@ -192,7 +192,7 @@ const handleExport = () => {
 }
 
 .console-grid { 
-  padding: 20px; 
+  padding: var(--container-padding); 
   flex-grow: 1; 
   width: 100%;
   max-width: 1200px;
@@ -201,12 +201,12 @@ const handleExport = () => {
 
 .task-list { 
   display: flex; 
-  gap: 10px; 
-  margin-bottom: 30px; 
+  gap: var(--grid-gap); 
+  margin-bottom: var(--space-lg); 
   flex-wrap: wrap;
 }
 
-.skills-grid { display: flex; flex-wrap: wrap; gap: 15px; }
+.skills-grid { display: flex; flex-wrap: wrap; gap: var(--space-md); }
 
 /* Buttons */
 button:hover { border-color: var(--color-focus-white); color: var(--color-focus-white); }
@@ -217,9 +217,9 @@ button.active { background: var(--color-focus-white); color: var(--color-vortex-
   font-size: 0.75rem; 
   font-weight: 800;
   letter-spacing: 2px;
-  margin: 25px 0 12px 0; 
+  margin: var(--space-lg) 0 var(--space-sm) 0; 
   border-left: 4px solid var(--color-focus-white); 
-  padding-left: 12px;
+  padding-left: var(--space-sm);
   text-shadow: 0 0 5px rgba(255,255,255,0.1);
 }
 
@@ -229,10 +229,13 @@ button {
   color: var(--color-text-mid); 
   display: flex;
   flex-direction: column;
-  min-width: 160px;
+  min-width: 176px;
   min-height: 48px;
-  padding: 12px;
+  padding: var(--space-sm);
+  justify-content: center;
+  align-items: stretch;
   transition: var(--transition-smooth);
+  gap: var(--space-xs);
 }
 
 .reset-btn {
@@ -263,6 +266,11 @@ button {
   background: var(--color-panel-mid);
   border: 1px solid var(--color-accent-blue);
   color: var(--color-accent-blue);
+  padding: var(--space-sm) var(--space-md);
+  flex-direction: row;      /* Align QTY and NAME horizontally */
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
 }
 
 .inventory-btn:hover {
@@ -374,6 +382,8 @@ button {
   cursor: pointer;
   padding: 0;
   z-index: 10;
+  top: var(--space-xs);
+  right: var(--space-xs);
 }
 
 .info-btn:hover {

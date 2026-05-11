@@ -3,6 +3,12 @@
     --color-vortex-black: #050505;
     --color-text-bright: #eeeeee;
     --font-technical: 'Courier New', Courier, monospace;
+
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 32px;
+    --space-xl: 64px;
 }
 
 html, body {
@@ -43,6 +49,10 @@ html, body {
     --glow-primary: 0 0 10px rgba(255, 255, 255, 0.4);
     --glow-active: 0 0 15px rgba(255, 255, 255, 0.3);
     --shadow-elevation: 0 4px 6px rgba(0,0,0,0.3);
+
+    --panel-padding: var(--space-md);
+    --grid-gap: var(--space-sm);
+    --container-padding: var(--space-lg);
 }
 
 @keyframes crt-flicker {

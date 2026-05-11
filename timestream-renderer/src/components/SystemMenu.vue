@@ -50,28 +50,29 @@ const processImport = () => {
 <style scoped>
 .system-panel {
   position: absolute;
-  top: 70px;
+  top: 72px;
   left: 50%;
   transform: translateX(-50%);
   background: var(--color-panel-dark);
   border: var(--border-active);
-  padding: 20px;
+  padding: var(--space-lg);
   z-index: 1000;
   width: 400px;
   box-shadow: var(--glow-active);
+  gap: var(--space-md);
 }
 
 .control-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: var(--space-sm);
 }
 
 .control-grid button {
   background: var(--color-panel-mid);
   color: var(--color-text-bright);
   border: var(--border-standard);
-  padding: 10px;
+  padding: var(--space-sm) var(--space-md);
   cursor: pointer;
   transition: var(--transition-smooth);
   font-family: var(--font-technical)
@@ -101,10 +102,10 @@ const processImport = () => {
   background: var(--color-vortex-black);
   border: var(--border-standard);
   color: var(--color-accent-blue);
-  padding: 10px;
+  padding: var(--space-sm);
   font-family: var(--font-technical);
   resize: none;
-  margin-bottom: 10px;
+  margin-bottom: var(--space-sm);
   box-sizing: border-box;
   outline: none;
 }
@@ -114,10 +115,10 @@ const processImport = () => {
   box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-import-console .import-actions {
+.import-console .import-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: var(--space-sm);
 }
 
 </style>
